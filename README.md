@@ -3,6 +3,7 @@
 Using node.js, react.js, express, postgres, DOM, AJAX, Bootstrap and webpack
 
 Brief Description:-
+
 This is a RSS reader web app using the above technologies to build. Fully customizable RSS reader with multiple category tabs to organize all user's feed. Search function to search all feed saved by the user. There will be a tab for user to browse through popular news outlets with a popup without needing to be redirect out of the page.
 
 Requirements:-
