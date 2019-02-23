@@ -1,0 +1,2 @@
+INSERT INTO users(name, photo_url, username, password) VALUES('Sean chan', 'https://ih1.redbubble.net/image.636118587.3338/flat,550x550,075,f.jpg', 'seanc', 'sc123');
+INSERT INTO users(name, photo_url, username, password) VALUES('Bat man', 'https://www.sideshowtoy.com/wp-content/uploads/2017/11/dc-comics-justice-league-batman-statue-prime1-studio-feature-903246-1.jpg', 'batm', 'bm123')

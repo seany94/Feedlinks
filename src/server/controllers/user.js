@@ -3,9 +3,11 @@ const request = require('request');
 module.exports = (db) => {
 
   let login = (req, res) => {
-    console.log(req.body.username)
-    console.log(req.body.password)
-    res.redirect('/')
+    console.log(req.body)
+    res.send('ok')
+    // db.users.signin(req, res, (error, result, user) => {
+    //     res.send(result)
+    //   });
    }
 
   return {
