@@ -21,6 +21,9 @@ const setupAppRoutes =
 
 const app = express();
 
+// This line allow public folder to be used
+app.use(express.static('public'));
+
 app.set('env', process.env.NODE_ENV);
 
 // Set up middleware
