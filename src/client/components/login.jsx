@@ -27,29 +27,29 @@ class Login extends React.Component {
 
     clickHandler(){
         console.log(this.state.username, this.state.password)
-        const URL = `http://localhost:5432/user`;
+        console.log(this.props.login)
+        var that = this;
 
-        axios(URL, {
-           method: 'POST',
-           data: {
+        axios.post('/user', {
             username: this.state.username,
             password: this.state.password
-           }
-         })
-           .then(response => response.data)
-           .catch(error => {
-             throw error;
-           });
-        // axios.post('/user', {
-        //     username: this.state.username,
-        //     password: this.state.password
-        //   })
-        //   .then(function (response) {
-        //     console.log(response);
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
+          })
+          .then(function (response) {
+            console.log(response.data);
+            if(typeof(response.data) == "object"){
+                var login = that.props.login;
+                login();
+            }
+            else if(response.data == "error"){
+                alert("Unrecognized login credentials")
+            }
+            else if(response.data == "wrong password"){
+                alert("Wrong Password")
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
 
     render() {
