@@ -1,24 +1,31 @@
 import React from 'react';
 
+import { withRouter } from 'react-router-dom';
+
 const axios = require('axios');
 
 class Signup extends React.Component {
     constructor() {
     super();
-    this.emailChangeHandler = this.emailChangeHandler.bind( this );
+    this.nameChangeHandler = this.nameChangeHandler.bind( this );
+    this.photoChangeHandler = this.photoChangeHandler.bind( this );
     this.usernameChangeHandler = this.usernameChangeHandler.bind( this );
     this.passwordChangeHandler = this.passwordChangeHandler.bind( this );
     this.clickHandler = this.clickHandler.bind( this );
 
     this.state = {
-      email: "",
-      username: "",
-      password: ""
+        name: "",
+        photo_url: "",
+        username: "",
+        password: "",
     };
   }
+    nameChangeHandler(event){
+        this.setState({name: event.target.value});
+    }
 
-    emailChangeHandler(event){
-        this.setState({email: event.target.value});
+    photoChangeHandler(event){
+        this.setState({photo_url: event.target.value});
     }
 
     usernameChangeHandler(event){
@@ -29,31 +36,55 @@ class Signup extends React.Component {
         this.setState({password: event.target.value});
     }
 
+    clickHandler(){
+        var that = this;
 
-    clickHandler(email, username, password){
-        // console.log(email, username, password)
+        axios.post('/user/signup', {
+            name: this.state.name,
+            photo: this.state.photo_url,
+            username: this.state.username,
+            password: this.state.password
+          })
+          .then(function (response) {
+            console.log(response.data)
+            if(typeof(response.data) == "object"){
+                var signup = that.props.signup;
+                signup(response.data[0]);
+            }
+            else if(response.data == "error"){
+                alert("Name/Username exists")
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
 
     render() {
         return (
             <div>
-              <div className="form-group">
-                <label>Email address</label>
-                <input type="email" onChange={this.emailChangeHandler} value={this.state.email} className="form-control" aria-describedby="emailHelp" placeholder="Enter email" />
-                <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-              </div>
-              <div className="form-group">
-                <label>Username</label>
-                <input type="password" onChange={this.usernameChangeHandler} value={this.state.username} className="form-control" placeholder="Enter Username" />
-              </div>
-              <div className="form-group">
-                <label>Password</label>
-                <input onChange={this.passwordChangeHandler} value={this.state.password} className="form-control" placeholder="Enter Password" />
-              </div>
-              <button onClick={() => {this.clickHandler(this.state.email, this.state.username, this.state.password)}} className="btn btn-primary">Submit</button>
+                <div className="form-group">
+                    <label><i class="fas fa-signature"></i> Name</label>
+                    <input onChange={this.nameChangeHandler} type="name" name="name" className="form-control" placeholder="Enter name" />
+                </div>
+                <div className="form-group">
+                    <label><i class="fas fa-image"></i> Photo</label>
+                    <input onChange={this.photoChangeHandler} type="photo" name="photo" className="form-control" placeholder="Enter photo link" />
+                </div>
+                <div className="form-group">
+                    <label><i class="fas fa-user"></i> Username</label>
+                    <input onChange={this.usernameChangeHandler} type="username" name="username" className="form-control" placeholder="Enter Username" />
+                </div>
+                <div className="form-group">
+                    <label><i class="fas fa-key"></i> Password</label>
+                    <input onChange={this.passwordChangeHandler} type="password" name="password" className="form-control" placeholder="Enter Password" />
+                </div>
+                <button type="button" onClick={this.clickHandler} className="btn btn-primary mr-2" data-dismiss="modal">Signup</button>
+                <span></span>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         );
     }
 }
 
-export default Signup;
+export default withRouter(Signup);

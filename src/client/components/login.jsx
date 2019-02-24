@@ -26,19 +26,16 @@ class Login extends React.Component {
     }
 
     clickHandler(){
-        console.log(this.state.username, this.state.password)
-        console.log(this.props.login)
         var that = this;
 
-        axios.post('/user', {
+        axios.post('/user/login', {
             username: this.state.username,
             password: this.state.password
           })
           .then(function (response) {
-            console.log(response.data);
             if(typeof(response.data) == "object"){
                 var login = that.props.login;
-                login();
+                login(response.data[0]);
             }
             else if(response.data == "error"){
                 alert("Unrecognized login credentials")
@@ -55,16 +52,17 @@ class Login extends React.Component {
     render() {
         return (
             <div>
-                <h1 className="text-center">Welcome to FeedLinks!</h1>
                 <div className="form-group">
-                    <label>Username</label>
+                    <label><i class="fas fa-user"></i> Username</label>
                     <input onChange={this.usernameChangeHandler} type="username" name="username" className="form-control" placeholder="Enter Username" />
                 </div>
                 <div className="form-group">
-                    <label>Password</label>
+                    <label><i class="fas fa-key"></i> Password</label>
                     <input onChange={this.passwordChangeHandler} type="password" name="password" className="form-control" placeholder="Enter Password" />
                 </div>
-                <button type="button" onClick={this.clickHandler} className="btn btn-primary">Login</button>
+                <button type="button" onClick={this.clickHandler} className="btn btn-primary mr-2" data-dismiss="modal">Login</button>
+                <span></span>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         );
     }
