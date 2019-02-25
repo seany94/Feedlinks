@@ -24,6 +24,7 @@ module.exports = (dbPoolInstance) => {
 
             if(password == inputPass){
                 res.cookie('loggedin', true);
+                res.cookie('user', user.id);
 
                 dbPoolInstance.query(`SELECT * FROM users WHERE name = '${user.name}'`, (error, queryResult) =>{
                     if( error ){
@@ -60,7 +61,11 @@ module.exports = (dbPoolInstance) => {
             res.send('error');
         }
         else if(validate === true){
+            const user = queryResult.rows[0];
+
             res.cookie('loggedin', true);
+            res.cookie('user', user.id);
+
             const queryString = 'INSERT INTO users (name, photo_url, username, password) VALUES ($1, $2, $3, $4)';
             const values = [
                 req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1),
@@ -85,8 +90,65 @@ module.exports = (dbPoolInstance) => {
     });
   };
 
+  let userFind = (cookie, callback) => {
+    dbPoolInstance.query(`SELECT * FROM users WHERE id = '${cookie}'`, (error, queryResult) =>{
+        if( error ){
+
+            // invoke callback function with results after query has executed
+            callback(error, null, null);
+
+          }
+          else{
+
+            // invoke callback function with results after query has executed
+            callback(null, queryResult.rows);
+          }
+    })
+  };
+
+  let userFeed = (cookie, callback) => {
+    dbPoolInstance.query(`SELECT * FROM users WHERE id = '${cookie}'`, (error, queryResult) =>{
+        let user = queryResult.rows;
+        dbPoolInstance.query(`SELECT feed_url FROM feeds INNER JOIN users ON (users.id = feeds.user_id AND users.id = '${cookie}')`, (error, queryResult) =>{
+            if( error ){
+
+                // invoke callback function with results after query has executed
+                callback(error, null, null);
+
+              }
+              else{
+
+                // invoke callback function with results after query has executed
+                callback(null, queryResult.rows);
+              }
+        })
+    })
+  };
+
+  let userCategory = (cookie, callback) => {
+    dbPoolInstance.query(`SELECT * FROM users WHERE id = '${cookie}'`, (error, queryResult) =>{
+        let user = queryResult.rows;
+        dbPoolInstance.query(`SELECT title FROM categories INNER JOIN users ON (users.id = categories.user_id AND users.id = '${cookie}')`, (error, queryResult) =>{
+            if( error ){
+
+                // invoke callback function with results after query has executed
+                callback(error, null, null);
+
+              }
+              else{
+
+                // invoke callback function with results after query has executed
+                callback(null, queryResult.rows);
+              }
+        })
+    })
+  };
+
   return {
     signin,
-    register
+    register,
+    userFind,
+    userFeed,
+    userCategory
   };
 };

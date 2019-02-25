@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS feeds (
     id SERIAL PRIMARY KEY,
-    title TEXT,
     feed_url TEXT,
     user_id INT,
     date_added DATE NOT NULL DEFAULT CURRENT_DATE,

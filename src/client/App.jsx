@@ -72,9 +72,7 @@ class App extends React.Component {
         else if(Cookies.get('loggedin') == "true"){
             return (
               <div>
-                <h1 className="text-center">Welcome to FeedLinks!</h1>
                 <Home />
-
               </div>
             );
         }

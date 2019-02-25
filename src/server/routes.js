@@ -4,4 +4,7 @@ module.exports = (app, db) => {
 
   app.post('/user/login', user.login);
   app.post('/user/signup', user.signup);
+  app.get('/user/:id', user.info);
+  app.get('/user/:id/feed', user.feed);
+  app.get('/user/:id/category', user.category);
 };

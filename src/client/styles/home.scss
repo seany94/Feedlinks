@@ -1,24 +1,44 @@
-:local .landing{
-	background-image: url("/images/bg.jpg");
-	background-size: cover;
-	background-repeat: no-repeat;
-	position:fixed;
-	padding:0;
-	margin:0;
-
-	top:0;
-	left:0;
-
-	width: 100%;
-	height: 100%;
+:local .searchbar{
+	margin-bottom: auto;
+	margin-top: auto;
+	height: 60px;
+	background-color: #353b48;
+	border-radius: 30px;
+	padding: 10px;
 }
 
-:local .splash{
+:local .search_input{
+	color: white;
+	border: 0;
+	outline: 0;
+	background: none;
+	width: 0;
+	caret-color:transparent;
+	line-height: 40px;
+	transition: width 0.4s linear;
+}
+
+:local .searchbar:hover > .search_input{
+	padding: 0 10px;
+	width: 450px;
+	caret-color:red;
+	transition: width 0.4s linear;
+}
+
+:local .searchbar:hover > .search_icon{
+	background: white;
+	color: #e74c3c;
+}
+
+:local .search_icon{
+	height: 40px;
+	width: 40px;
+	float: right;
 	display: flex;
-  align-items: center;
-  justify-content: center;
-	height: 600px;
-	width: auto;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	color:white;
 }
 
 :local .button{
@@ -34,9 +54,9 @@
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 	border-radius: 8px;
-	font-size: 44px;
+	font-size: 16px;
 	padding: 15px 30px;
-	margin: 0 50px;
+	margin: 0 30px;
 	text-decoration:none;
 	text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
 	font-weight:bold;
@@ -64,4 +84,31 @@
 	background-image: -ms-linear-gradient(top, #26759E, #133D5B);
 	background-image: -o-linear-gradient(top, #26759E, #133D5B);
 	background-image: linear-gradient(to bottom, #26759E, #133D5B);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#26759E, endColorstr=#133D5B);
+}
+
+:local .list {
+	display: inline-block;
+	background-color: teal;
+	box-shadow: 0px 2px 15px 0px;
+	vertical-align: top;
+	text-align: center;
+	width: 200px;
+	padding: 20px;
+	margin: 5px 30px;
+	border-bottom: 1px solid black;
+	position: relative;
+}
+:local .list:hover:after {
+	content: ' ';
+	display: block;
+	height: 16px;
+	width: 16px;
+	background: white;
+	position: absolute;
+	left: 50%;
+	margin-left: -8px;
+	transform: rotate(45deg);
+	bottom:-9px;
+	border-left: 1px solid black;
+	border-top: 1px solid black;
 }
