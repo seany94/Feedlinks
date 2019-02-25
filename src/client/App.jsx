@@ -38,7 +38,7 @@ class App extends React.Component {
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div className="modal-body">
+                      <div className="modal-body" id="modal-login">
                         <Login login={this.clickHandler}/>
                       </div>
                     </div>
@@ -53,7 +53,7 @@ class App extends React.Component {
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div className="modal-body">
+                      <div className="modal-body" id="modal-signup">
                         <Signup signup={this.clickHandler}/>
                       </div>
                     </div>

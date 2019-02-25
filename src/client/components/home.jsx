@@ -7,6 +7,11 @@ class Home extends React.Component {
 
         };
     }
+
+    componentDidMount(){
+        document.body.removeChild(document.body.querySelector('div.modal-backdrop'))
+    }
+
     render() {
     return (
       <div>

@@ -42,7 +42,7 @@ class Login extends React.Component {
                 div.textContent = "Unrecognized login credentials"
                 div.setAttribute("id", "text");
                 div.setAttribute("class", "alert alert-danger");
-                var loginBtn = document.querySelector('div.modal-body')
+                var loginBtn = document.querySelector('div#modal-login')
                 if(loginBtn.querySelector("#text") != null){
                     return;
                 }
@@ -60,7 +60,7 @@ class Login extends React.Component {
                 div2.textContent = "Wrong Password"
                 div2.setAttribute("id", "text2");
                 div2.setAttribute("class", "alert alert-danger");
-                var loginBtn2 = document.querySelector('div.modal-body')
+                var loginBtn2 = document.querySelector('div#modal-login')
                 if(loginBtn2.querySelector("#text2") != null){
                     return;
                 }
