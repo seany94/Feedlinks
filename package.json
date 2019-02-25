@@ -94,6 +94,7 @@
     "react-hot-loader": ">=4.6.5",
     "react-router-dom": "^4.3.1",
     "request": "^2.88.0",
+    "rss-parser": "^3.6.2",
     "sanitize.css": ">=8.0.0",
     "sha256": "^0.2.0",
     "slick-carousel": "^1.8.1",
