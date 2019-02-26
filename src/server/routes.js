@@ -12,5 +12,5 @@ module.exports = (app, db) => {
   app.post('/feed/add', feed.add);
 
   app.post('/category/add', category.addCat);
-
+  app.delete('/category/delete', category.del);
 };

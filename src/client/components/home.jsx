@@ -18,6 +18,7 @@ class Home extends React.Component {
         this.searchChangeHandler = this.searchChangeHandler.bind( this );
         this.addfeedClickHandler = this.addfeedClickHandler.bind( this );
         this.addcategoryClickHandler = this.addcategoryClickHandler.bind( this );
+        this.delcategoryClickHandler = this.delcategoryClickHandler.bind( this );
         this.state = {
             name: "",
             photo_url: "",
@@ -25,7 +26,8 @@ class Home extends React.Component {
             category: [],
             search: "",
             feed_add: false,
-            category_add: false
+            category_add: false,
+            category_del: false
         };
     }
 
@@ -93,8 +95,6 @@ class Home extends React.Component {
     }
 
     searchChangeHandler(event){
-        // console.log(event.target.value)
-        // this.setState({search: event.target.value});
         const feeds = Array.from(document.querySelectorAll('.card'));
         let filter = document.querySelector('#search').value.toLowerCase();
         for (let i = 0; i < feeds.length; i++) {
@@ -118,10 +118,22 @@ class Home extends React.Component {
         this.setState({category_add: true});
     }
 
+    delcategoryClickHandler(category){
+        var that = this;
+        var title = category.title
+        axios.delete('/category/delete', {
+            data: { title: title }
+          })
+          .then(response => {
+            that.componentDidMount();
+            that.setState({category_del: true});
+          });
+    }
+
     render() {
         // console.log(this.state.feed)
         // console.log(this.state.category)
-        const categories = this.state.category.map(tab => {return <Category list={tab}></Category>});
+        const categories = this.state.category.map(tab => {return <Category list={tab} delete={this.delcategoryClickHandler}></Category>});
         const feeds = this.state.feed.map(link => {return <Feed list={link}></Feed>});
 
     return (
@@ -206,6 +218,8 @@ class Category extends React.Component{
         return(
             <div className={Homecss.list}>
                 {this.props.list.title}
+                <span> </span>
+                <a onClick={() => {this.props.delete(this.props.list)}}><i className="far fa-trash-alt" id="del"></i></a>
             </div>
             );
     }

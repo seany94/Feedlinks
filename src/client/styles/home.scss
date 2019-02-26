@@ -132,7 +132,7 @@
 	background-image: linear-gradient(to bottom, #26759E, #133D5B);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#26759E, endColorstr=#133D5B);
 }
 
-:local .list {
+/*:local .list {
 	display: inline-block;
 	background-color: teal;
 	box-shadow: 0px 2px 15px 0px;
@@ -158,6 +158,68 @@
 	bottom:-9px;
 	border-left: 1px solid black;
 	border-top: 1px solid black;
+}*/
+
+:local .list {
+	background-color: teal;
+	box-shadow: 0px 1px 1px 0px;
+	vertical-align: top;
+	text-align: center;
+	border-bottom: 1px solid black;
+	position: relative;
+	color: white;
+	cursor: pointer;
+	text-align: center;
+	font-size:16px;
+	font-weight: 400;
+	line-height: 45px;
+	margin: 10px 30px;
+	max-width: 180px;
+	text-decoration: none;
+	text-transform: uppercase;
+	width: 100%;
+	&:hover { text-decoration: none; }
+}
+
+:local .list {
+    letter-spacing: 0;
+}
+
+:local .list:hover,
+:local .list:active {
+  letter-spacing: 5px;
+}
+
+:local .list:after,
+:local .list:before {
+  backface-visibility: hidden;
+  border: 1px solid rgba(#fff, 0);
+  bottom: 0px;
+  content: " ";
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  transition: all 280ms ease-in-out;
+  width: 0;
+}
+
+:local .list:hover:after,
+:local .list:hover:before {
+  backface-visibility: hidden;
+  border-color: #fff;
+  transition: width 350ms ease-in-out;
+  width: 70%;
+}
+
+:local .list:hover:before {
+  bottom: auto;
+  top: 0;
+  width: 70%;
+}
+
+:local a i {
+	color: white;
+	&:hover { color: #FFDE0A }
 }
 
 :local .content {

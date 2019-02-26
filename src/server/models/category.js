@@ -26,7 +26,25 @@ module.exports = (dbPoolInstance) => {
     })
   };
 
+  let delCategory = (req, res, cookie, callback) => {
+    const queryString = `DELETE FROM categories WHERE title = '${req.body.title}'`;
+
+    dbPoolInstance.query(queryString, (error, queryResult) =>{
+        if( error ){
+            // invoke callback function with results after query has executed
+            callback(error, null, null);
+
+          }
+          else{
+
+            // invoke callback function with results after query has executed
+            callback(null, queryResult.rows);
+          }
+    })
+  };
+
   return {
-    addCategory
+    addCategory,
+    delCategory
   };
 };
