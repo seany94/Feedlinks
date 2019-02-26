@@ -14,6 +14,7 @@ class App extends React.Component {
     constructor() {
         super();
         this.clickHandler = this.clickHandler.bind( this );
+        this.signoutClickHandler = this.signoutClickHandler.bind( this );
         this.state = {
             name: "",
             photo_url: "",
@@ -23,6 +24,13 @@ class App extends React.Component {
     clickHandler(event){
         // console.log(event)
         this.setState({name: event.name, photo_url: event.photo_url});
+    }
+
+    signoutClickHandler(event){
+        // console.log(event)
+        Cookies.remove('loggedin');
+        Cookies.remove('user');
+        this.setState({name: "", photo_url: ""});
     }
 
     render() {
@@ -72,7 +80,7 @@ class App extends React.Component {
         else if(Cookies.get('loggedin') == "true"){
             return (
               <div>
-                <Home />
+                <Home signout={this.signoutClickHandler}/>
               </div>
             );
         }

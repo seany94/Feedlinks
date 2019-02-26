@@ -15,13 +15,14 @@ class Home extends React.Component {
     constructor() {
         super();
         this.searchChangeHandler = this.searchChangeHandler.bind( this );
-        this.clickHandler = this.clickHandler.bind( this );
+        this.addfeedClickHandler = this.addfeedClickHandler.bind( this );
         this.state = {
             name: "",
             photo_url: "",
             feed: [],
             category: [],
-            search: ""
+            search: "",
+            feed_add: false
         };
     }
 
@@ -38,6 +39,7 @@ class Home extends React.Component {
             axios.get(`/user/${userCookie}/feed`)
               .then(function (response) {
                 var feedArr = [];
+                var counter = 0;
                 for(let i = 0; i < response.data.length; i++){
                     parser.parseURL(CORS_PROXY + response.data[i].feed_url, function(err, feed) {
                       feed.items.forEach(function(entry) {
@@ -45,7 +47,8 @@ class Home extends React.Component {
 
                         feedArr.push([feed.title, entry.title, entry.link, entry.pubDate]);
                       })
-                        if((i + 1) == response.data.length){
+                        counter++;
+                        if(counter == response.data.length){
                             that.setState({feed: feedArr});
                         }
                     })
@@ -64,6 +67,7 @@ class Home extends React.Component {
             axios.get(`/user/${userCookie}/feed`)
               .then(function (response) {
                 var feedArr = [];
+                var counter = 0;
                 for(let i = 0; i < response.data.length; i++){
                     parser.parseURL(CORS_PROXY + response.data[i].feed_url, function(err, feed) {
                       feed.items.forEach(function(entry) {
@@ -71,7 +75,8 @@ class Home extends React.Component {
 
                         feedArr.push([feed.title, entry.title, entry.link, entry.pubDate]);
                       })
-                        if((i + 1) == response.data.length){
+                        counter++;
+                        if(counter == response.data.length){
                             that.setState({feed: feedArr});
                         }
                     })
@@ -89,10 +94,9 @@ class Home extends React.Component {
         this.setState({search: event.target.value});
     }
 
-    clickHandler(event){
-        Cookies.remove('loggedin');
-        Cookies.remove('user');
-        window.location.reload();
+    addfeedClickHandler(event){
+        this.componentDidMount();
+        this.setState({feed_add: true});
     }
 
     render() {
@@ -104,7 +108,7 @@ class Home extends React.Component {
     return (
       <div>
         <h1 className="text-center">Welcome to FeedLinks {this.state.name} <img className="rounded-circle" src={this.state.photo_url} width="55px" height="55px"/>!
-        <button type="button" onClick={this.clickHandler} className={Homecss.signout}>
+        <button type="button" onClick={this.props.signout} className={Homecss.signout}>
             <i className="fas fa-sign-out-alt"></i>
         </button>
         </h1>
@@ -120,7 +124,7 @@ class Home extends React.Component {
                         </button>
                       </div>
                       <div className="modal-body" id="modal-addfeed">
-                        <Addfeed />
+                        <Addfeed addfeed={this.addfeedClickHandler}/>
                       </div>
                     </div>
                   </div>
@@ -139,7 +143,8 @@ class Home extends React.Component {
                       <a className={Homecss.search_icon}><i className="fas fa-search"></i></a>
                     </div>
                 </div>
-                <div className={Homecss.content}>
+                <div className={Homecss.content} id="feed">
+                    <img src="https://i.redd.it/ad27atzy1zxz.gif" alt="" id="loading" width="920px"/>
                     {feeds}
                 </div>
             </div>
@@ -174,8 +179,17 @@ class Category extends React.Component{
 
 class Feed extends React.Component{
 
+    componentDidMount(){
+        if(document.body.querySelector('#loading') != null){
+            document.body.querySelector('#feed').removeChild(document.body.querySelector('#loading'))
+        }
+        else{
+            return;
+        }
+    }
+
     render(){
-        // console.log(this.props.list[1])
+        // console.log(this.props.list[0])
         var str = this.props.list[1];
         var re = str.replace(/&#039;/g, "\'");
         return(

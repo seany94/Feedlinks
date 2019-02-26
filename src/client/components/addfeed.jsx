@@ -16,16 +16,18 @@ class Addfeed extends React.Component {
   }
 
     feedChangeHandler(event){
-        console.log(event.target.value)
+        // console.log(event.target.value)
         this.setState({feed_url: event.target.value});
     }
 
     clickHandler(){
+        var that = this;
         axios.post('/feed/add', {
             feed_url: this.state.feed_url
           })
           .then(function (response) {
-            window.location.reload();
+            that.setState({feed_url: ""});
+            that.props.addfeed();
           })
     }
 
@@ -46,7 +48,7 @@ class Addfeed extends React.Component {
                       <option>5</option>
                     </select>
                 </div>
-                <button type="button" onClick={this.clickHandler} className="btn btn-primary mr-2" id="addFeed">Add</button>
+                <button type="button" onClick={this.clickHandler} className="btn btn-primary mr-2" id="addFeed" data-dismiss="modal">Add</button>
                 <span></span>
                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
