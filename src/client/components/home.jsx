@@ -4,6 +4,7 @@ import Homecss from '../styles/home.scss'
 import Cookies from 'js-cookie';
 
 import Addfeed from '../components/addfeed';
+import Addcategory from '../components/addcategory';
 
 const axios = require('axios');
 
@@ -16,13 +17,15 @@ class Home extends React.Component {
         super();
         this.searchChangeHandler = this.searchChangeHandler.bind( this );
         this.addfeedClickHandler = this.addfeedClickHandler.bind( this );
+        this.addcategoryClickHandler = this.addcategoryClickHandler.bind( this );
         this.state = {
             name: "",
             photo_url: "",
             feed: [],
             category: [],
             search: "",
-            feed_add: false
+            feed_add: false,
+            category_add: false
         };
     }
 
@@ -91,12 +94,28 @@ class Home extends React.Component {
 
     searchChangeHandler(event){
         // console.log(event.target.value)
-        this.setState({search: event.target.value});
+        // this.setState({search: event.target.value});
+        const feeds = Array.from(document.querySelectorAll('.card'));
+        let filter = document.querySelector('#search').value.toLowerCase();
+        for (let i = 0; i < feeds.length; i++) {
+            let txtValue = feeds[i].textContent;
+            if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                feeds[i].style.display = "";
+            }
+            else {
+                feeds[i].style.display = "none";
+            }
+        }
     }
 
     addfeedClickHandler(event){
         this.componentDidMount();
         this.setState({feed_add: true});
+    }
+
+    addcategoryClickHandler(event){
+        this.componentDidMount();
+        this.setState({category_add: true});
     }
 
     render() {
@@ -129,6 +148,21 @@ class Home extends React.Component {
                     </div>
                   </div>
                 </div>
+                <div className="modal fade" id="addCat" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Add Category</h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div className="modal-body" id="modal-addfeed">
+                        <Addcategory addcategory={this.addcategoryClickHandler}/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               <button type="button" className={Homecss.button} data-toggle="modal" data-target="#addFeed"><i className="fa fa-plus"></i>&nbsp; &nbsp;Feed &nbsp; &nbsp; &nbsp;</button>
               <button type="button" className={Homecss.button} data-toggle="modal" data-target="#addCat"><i className="fa fa-plus"></i> Category&nbsp;</button>
               <br/>
@@ -139,7 +173,7 @@ class Home extends React.Component {
             <div className="col-8">
                 <div className="d-flex justify-content-center">
                     <div className={Homecss.searchbar}>
-                      <input className={Homecss.search_input} onChange={this.searchChangeHandler} type="text" placeholder="Enter Title of Feed"/>
+                      <input className={Homecss.search_input} onChange={this.searchChangeHandler} id="search" type="text" placeholder="Enter Title of Feed"/>
                       <a className={Homecss.search_icon}><i className="fas fa-search"></i></a>
                     </div>
                 </div>

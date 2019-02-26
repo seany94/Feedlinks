@@ -1,6 +1,7 @@
 module.exports = (app, db) => {
   const user = require('./controllers/user')(db);
   const feed = require('./controllers/feed')(db);
+  const category = require('./controllers/category')(db);
 
   app.post('/user/login', user.login);
   app.post('/user/signup', user.signup);
@@ -9,5 +10,7 @@ module.exports = (app, db) => {
   app.get('/user/:id/category', user.category);
 
   app.post('/feed/add', feed.add);
+
+  app.post('/category/add', category.addCat);
 
 };
