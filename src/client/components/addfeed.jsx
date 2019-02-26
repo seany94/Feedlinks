@@ -25,7 +25,7 @@ class Addfeed extends React.Component {
             feed_url: this.state.feed_url
           })
           .then(function (response) {
-            console.log(response.data);
+            window.location.reload();
           })
     }
 

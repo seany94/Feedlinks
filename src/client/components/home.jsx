@@ -176,8 +176,8 @@ class Feed extends React.Component{
 
     render(){
         // console.log(this.props.list[1])
-        // var str = this.props.list[1];
-        // str.replace(/[~%&\\;:"',<>?#\s]/g, "");
+        var str = this.props.list[1];
+        var re = str.replace(/&#039;/g, "\'");
         return(
             <div>
                 <div className="card mt-1">
@@ -185,7 +185,7 @@ class Feed extends React.Component{
                     {this.props.list[0]}
                   </div>
                   <div className="card-body">
-                    <h5 className="card-title">{this.props.list[1]}</h5>
+                    <h5 className="card-title">{re}</h5>
                     <p className="card-text">{this.props.list[2]}</p>
                     <p className="card-text"><small className="text-muted">{this.props.list[3]}</small></p>
                   </div>
