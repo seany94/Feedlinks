@@ -15,6 +15,7 @@ class Home extends React.Component {
     constructor() {
         super();
         this.searchChangeHandler = this.searchChangeHandler.bind( this );
+        this.clickHandler = this.clickHandler.bind( this );
         this.state = {
             name: "",
             photo_url: "",
@@ -40,11 +41,15 @@ class Home extends React.Component {
                 for(let i = 0; i < response.data.length; i++){
                     parser.parseURL(CORS_PROXY + response.data[i].feed_url, function(err, feed) {
                       feed.items.forEach(function(entry) {
+                        // console.log(entry)
+
                         feedArr.push([feed.title, entry.title, entry.link, entry.pubDate]);
                       })
+                        if((i + 1) == response.data.length){
+                            that.setState({feed: feedArr});
+                        }
                     })
                 }
-                that.setState({feed: feedArr});
               })
               axios.get(`/user/${userCookie}/category`)
               .then(function (response) {
@@ -66,9 +71,11 @@ class Home extends React.Component {
 
                         feedArr.push([feed.title, entry.title, entry.link, entry.pubDate]);
                       })
+                        if((i + 1) == response.data.length){
+                            that.setState({feed: feedArr});
+                        }
                     })
                 }
-                that.setState({feed: feedArr});
               })
               axios.get(`/user/${userCookie}/category`)
               .then(function (response) {
@@ -82,6 +89,12 @@ class Home extends React.Component {
         this.setState({search: event.target.value});
     }
 
+    clickHandler(event){
+        Cookies.remove('loggedin');
+        Cookies.remove('user');
+        window.location.reload();
+    }
+
     render() {
         // console.log(this.state.feed)
         // console.log(this.state.category)
@@ -90,7 +103,11 @@ class Home extends React.Component {
 
     return (
       <div>
-        <h1 className="text-center">Welcome to FeedLinks {this.state.name} <img className="rounded-circle" src={this.state.photo_url} width="55px" height="55px"/>!</h1>
+        <h1 className="text-center">Welcome to FeedLinks {this.state.name} <img className="rounded-circle" src={this.state.photo_url} width="55px" height="55px"/>!
+        <button type="button" onClick={this.clickHandler} className={Homecss.signout}>
+            <i className="fas fa-sign-out-alt"></i>
+        </button>
+        </h1>
         <div className="row">
             <div className="col-2">
                 <div className="modal fade" id="addFeed" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -156,8 +173,11 @@ class Category extends React.Component{
 }
 
 class Feed extends React.Component{
+
     render(){
-        // console.log(this.props.list)
+        // console.log(this.props.list[1])
+        // var str = this.props.list[1];
+        // str.replace(/[~%&\\;:"',<>?#\s]/g, "");
         return(
             <div>
                 <div className="card mt-1">
