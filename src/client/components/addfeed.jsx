@@ -16,11 +16,17 @@ class Addfeed extends React.Component {
   }
 
     feedChangeHandler(event){
+        console.log(event.target.value)
         this.setState({feed_url: event.target.value});
     }
 
     clickHandler(){
-
+        axios.post('/feed/add', {
+            feed_url: this.state.feed_url
+          })
+          .then(function (response) {
+            console.log(response.data);
+          })
     }
 
     render() {
@@ -28,7 +34,7 @@ class Addfeed extends React.Component {
             <div>
                 <div className="form-group">
                     <label><i className="fas fa-link"></i> Feed Link*</label>
-                    <input onChange={this.feedChangeHandler} type="password" name="feed" className="form-control" placeholder="Enter Feed URL" />
+                    <input onChange={this.feedChangeHandler} type="text" name="feed" value={this.state.feed_url} className="form-control" placeholder="Enter Feed URL" />
                 </div>
                 <div className="form-group">
                     <label>Add to Category</label>

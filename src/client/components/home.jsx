@@ -108,8 +108,8 @@ class Home extends React.Component {
                     </div>
                   </div>
                 </div>
-              <button type="button" className={Homecss.button} data-toggle="modal" data-target="#addFeed">&nbsp;Add Feed&nbsp;</button>
-              <button type="button" className={Homecss.button} data-toggle="modal" data-target="#addCat">Add Category</button>
+              <button type="button" className={Homecss.button} data-toggle="modal" data-target="#addFeed"><i className="fa fa-plus"></i>&nbsp; &nbsp;Feed &nbsp; &nbsp; &nbsp;</button>
+              <button type="button" className={Homecss.button} data-toggle="modal" data-target="#addCat"><i className="fa fa-plus"></i> Category&nbsp;</button>
               <br/>
               <div>
                   {categories}

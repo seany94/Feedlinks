@@ -6,54 +6,27 @@
 module.exports = (dbPoolInstance) => {
   // `dbPoolInstance` is accessible within this function scope
 
-  let create = (pokemon, callback) => {
-    // set up query
-    const queryString = `INSERT INTO pokemons (name, num, img, weight, height)
-      VALUES ($1, $2, $3, $4, $5) RETURNING *`;
-    const values = [pokemon.name, pokemon.num, pokemon.img, pokemon.weight, pokemon.height];
+  let addFeed = (req, res, cookie, callback) => {
+    const queryString = 'INSERT INTO feeds (feed_url, user_id) VALUES ($1, $2)';
+    const values = [
+            req.body.feed_url,
+            cookie
+        ];
+    dbPoolInstance.query(queryString, values, (error, queryResult) =>{
+        if( error ){
+            // invoke callback function with results after query has executed
+            callback(error, null, null);
 
-    // execute query
-    dbPoolInstance.query(queryString, values, (error, queryResult) => {
-      // invoke callback function with results after query has executed
+          }
+          else{
 
-      if (error) {
-        console.log('query error', error);
-
-        // invoke callback function with results after query has executed
-        callback(error, null);
-      } else {
-        // invoke callback function with results after query has executed
-
-        if (queryResult.rows.length > 0) {
-          callback(null, queryResult.rows[0]);
-        } else {
-          callback(null, null);
-        }
-      }
-    });
-  };
-
-  let get = (id, callback) => {
-    const values = [id];
-
-    dbPoolInstance.query('SELECT * from pokemons WHERE id=$1', values, (error, queryResult) => {
-      if (error) {
-        // invoke callback function with results after query has executed
-        callback(error, null);
-      } else {
-        // invoke callback function with results after query has executed
-
-        if (queryResult.rows.length > 0) {
-          callback(null, queryResult.rows[0]);
-        } else {
-          callback(null, null);
-        }
-      }
-    });
+            // invoke callback function with results after query has executed
+            callback(null, queryResult.rows, values);
+          }
+    })
   };
 
   return {
-    create,
-    get
+    addFeed
   };
 };
