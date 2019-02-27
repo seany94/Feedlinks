@@ -68,7 +68,7 @@ class Signup extends React.Component {
                 // console.log(response.data)
                 if(typeof(response.data) == "object"){
                     var signup = that.props.signup;
-                    signup(response.data[0]);
+                    signup(response.data, that.state.password);
                 }
                 else if(response.data == "error"){
                     var div2 = document.createElement("div")

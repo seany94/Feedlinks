@@ -213,12 +213,12 @@ class Home extends React.Component {
             <div className="col-2">
               <button type="button" className={Homecss.button} data-toggle="collapse" href="#news" role="button" aria-expanded="false" aria-controls="news">News Sites</button>
               <div className="collapse" id="news">
-                <div className="card card-body">
-                  BBC
-                  <br/>
-                  Reddit
-                  <br/>
-                  Channel NewsAsia
+                <div className="card card-body text-right">
+                  <a href="https://www.bbc.com/news/10628494" target="_blank">BBC</a>
+                  <a href="https://www.channelnewsasia.com/news/rss" target="_blank">Channel NewsAsia</a>
+                  <a href="http://www.chinadaily.com.cn/rss/index.html" target="_blank">China Daily</a>
+                  <a href="https://www.washingtonpost.com/discussions/2018/10/12/washington-post-rss-feeds/?noredirect=on&utm_term=.0199cfea8cd8" target="_blank">The Washington Post</a>
+                  <a href="https://www.dailytelegraph.com.au/help-rss" target="_blank">Daily Telegraph</a>
                 </div>
               </div>
             </div>

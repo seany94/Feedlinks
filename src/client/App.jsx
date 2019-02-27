@@ -8,7 +8,7 @@ import Login from './components/login';
 import Signup from './components/signup';
 
 import Cookies from 'js-cookie';
-// const axios = require('axios');
+const axios = require('axios');
 
 class App extends React.Component {
     constructor() {
@@ -21,9 +21,16 @@ class App extends React.Component {
         };
     }
 
-    clickHandler(event){
-        // console.log(event)
-        this.setState({name: event.name, photo_url: event.photo_url});
+    clickHandler(event, password){
+        console.log(event, password)
+        var that = this;
+        axios.post('/user/login', {
+            username: event[2],
+            password: password
+          })
+          .then(function (response) {
+            that.setState({name: event[0], photo_url: event[1]});
+          })
     }
 
     signoutClickHandler(event){
