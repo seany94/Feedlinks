@@ -43,8 +43,28 @@ module.exports = (dbPoolInstance) => {
     })
   };
 
+  let editCategory = (req, res, cookie, callback) => {
+    dbPoolInstance.query(`SELECT id FROM users WHERE id = ${cookie}`, (error, queryResult) =>{
+        let user = queryResult.rows[0].id;
+        dbPoolInstance.query(`UPDATE categories SET title = '${req.body.title}' WHERE user_id = ${cookie} AND title = '${req.body.name}'`, (error, queryResult) =>{
+            if( error ){
+
+            // invoke callback function with results after query has executed
+                callback(error, null, null, null);
+
+            }
+            else{
+            // invoke callback function with results after query has executed
+                callback(null, queryResult.rows);
+            }
+        })
+    // })
+    })
+  };
+
   return {
     addCategory,
-    delCategory
+    delCategory,
+    editCategory
   };
 };

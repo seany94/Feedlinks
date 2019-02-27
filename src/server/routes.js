@@ -13,4 +13,6 @@ module.exports = (app, db) => {
 
   app.post('/category/add', category.addCat);
   app.delete('/category/delete', category.del);
+  app.put('/category/edit/:id', category.edit);
+
 };

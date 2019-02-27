@@ -6,17 +6,20 @@ CREATE TABLE IF NOT EXISTS users (
     password TEXT
 );
 
-CREATE TABLE IF NOT EXISTS feeds (
+CREATE TABLE IF NOT EXISTS categories (
     id SERIAL PRIMARY KEY,
-    feed_url TEXT,
+    title TEXT,
     user_id INT,
     date_added DATE NOT NULL DEFAULT CURRENT_DATE,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE IF NOT EXISTS categories (
+CREATE TABLE IF NOT EXISTS feeds (
     id SERIAL PRIMARY KEY,
-    title TEXT,
+    feed_url TEXT,
     user_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    cat_id INT REFERENCES categories ON DELETE CASCADE,
+    date_added DATE NOT NULL DEFAULT CURRENT_DATE,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (cat_id) REFERENCES categories(id)
 );

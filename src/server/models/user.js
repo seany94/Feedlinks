@@ -126,9 +126,9 @@ module.exports = (dbPoolInstance) => {
   };
 
   let userCategory = (cookie, callback) => {
-    dbPoolInstance.query(`SELECT * FROM users WHERE id = '${cookie}'`, (error, queryResult) =>{
+    dbPoolInstance.query(`SELECT * FROM users WHERE id = ${cookie}`, (error, queryResult) =>{
         let user = queryResult.rows;
-        dbPoolInstance.query(`SELECT title FROM categories INNER JOIN users ON (users.id = categories.user_id AND users.id = '${cookie}')`, (error, queryResult) =>{
+        dbPoolInstance.query(`SELECT title, date_added FROM categories INNER JOIN users ON (users.id = categories.user_id AND users.id = ${cookie}) ORDER BY date_added`, (error, queryResult) =>{
             if( error ){
 
                 // invoke callback function with results after query has executed

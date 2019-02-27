@@ -16,8 +16,16 @@ module.exports = (db) => {
         });
     };
 
+    let edit = (req, res) => {
+        let cookie = req.cookies.user;
+        db.categories.editCategory(req, res, cookie, (error, result) => {
+            res.send(result)
+        });
+    };
+
   return {
     addCat:addCat,
     del:del,
+    edit:edit,
   };
 };

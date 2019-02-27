@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 
 import Addfeed from '../components/addfeed';
 import Addcategory from '../components/addcategory';
+import Editcategory from '../components/editcategory';
 
 const axios = require('axios');
 
@@ -19,6 +20,7 @@ class Home extends React.Component {
         this.addfeedClickHandler = this.addfeedClickHandler.bind( this );
         this.addcategoryClickHandler = this.addcategoryClickHandler.bind( this );
         this.delcategoryClickHandler = this.delcategoryClickHandler.bind( this );
+        this.editcategoryClickHandler = this.editcategoryClickHandler.bind( this );
         this.state = {
             name: "",
             photo_url: "",
@@ -27,7 +29,8 @@ class Home extends React.Component {
             search: "",
             feed_add: false,
             category_add: false,
-            category_del: false
+            category_del: false,
+            category_edit: false
         };
     }
 
@@ -120,9 +123,8 @@ class Home extends React.Component {
 
     delcategoryClickHandler(category){
         var that = this;
-        var title = category.title
         axios.delete('/category/delete', {
-            data: { title: title }
+            data: { title: category.title }
           })
           .then(response => {
             that.componentDidMount();
@@ -130,10 +132,23 @@ class Home extends React.Component {
           });
     }
 
+    editcategoryClickHandler(category, title){
+        var that = this;
+        var userCookie = Cookies.get('user');
+        axios.put(`/category/edit/${userCookie}`, {
+            title: category,
+            name: title
+          })
+          .then(response => {
+            that.componentDidMount();
+            that.setState({category_edit: true});
+          });
+    }
+
     render() {
         // console.log(this.state.feed)
         // console.log(this.state.category)
-        const categories = this.state.category.map(tab => {return <Category list={tab} delete={this.delcategoryClickHandler}></Category>});
+        const categories = this.state.category.map(tab => {return <Category list={tab} delete={this.delcategoryClickHandler} edit={this.editcategoryClickHandler}></Category>});
         const feeds = this.state.feed.map(link => {return <Feed list={link}></Feed>});
 
     return (
@@ -213,13 +228,46 @@ class Home extends React.Component {
 }
 
 class Category extends React.Component{
+    constructor() {
+        super();
+        this.clickHandler = this.clickHandler.bind( this );
+        this.state = {
+        };
+    }
+
+    clickHandler(category, title){
+        this.props.edit(category, title)
+    }
+
     render(){
-        // console.log(this.props.list)
+        // console.log(this.props.list.title)
         return(
-            <div className={Homecss.list}>
-                {this.props.list.title}
-                <span> </span>
-                <a onClick={() => {this.props.delete(this.props.list)}}><i className="far fa-trash-alt" id="del"></i></a>
+            <div>
+                <div className="modal fade" id={"editFeed" + this.props.list.title} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Edit Feed Title</h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div className="modal-body" id="modal-editfeed">
+                        <Editcategory title={this.props.list.title} editcategory={this.clickHandler}/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className={Homecss.list}>
+                    {this.props.list.title}
+                    <span> </span>
+                    <a onClick={() => {this.props.delete(this.props.list)}}>
+                        <i className="far fa-trash-alt" id="del"></i>
+                    </a>
+                    <a data-toggle="modal" data-target={"#editFeed" + this.props.list.title}>
+                        <i className="far fa-edit"></i>
+                    </a>
+                </div>
             </div>
             );
     }
