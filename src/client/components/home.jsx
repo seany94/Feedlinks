@@ -151,13 +151,16 @@ class Home extends React.Component {
 
     optionfeedClickHandler(category){
         if(document.body.querySelector('option') == null){
+            var holder = document.createElement("option");
+            holder.innerHTML = "Choose category to add into"
+            document.body.querySelector('#catselect').appendChild(holder);
             var option = document.createElement("option");
-            option.innerHTML = "None"
+            option.innerHTML = "Unsorted"
             document.body.querySelector('#catselect').appendChild(option);
             for(let i = 0; i < this.state.category.length; i++){
                 var options = document.createElement("option");
                 var optionText = this.state.category[i].title
-                options.setAttribute("value", i + 1)
+                options.setAttribute("value", this.state.category[i].id)
                 options.innerHTML = optionText;
                 document.body.querySelector('#catselect').appendChild(options);
             }
@@ -166,13 +169,16 @@ class Home extends React.Component {
             while (document.body.querySelector('#catselect').firstChild) {
                 document.body.querySelector('#catselect').removeChild(document.body.querySelector('#catselect').firstChild);
             }
+            var holder = document.createElement("option");
+            holder.innerHTML = "Choose category to add into"
+            document.body.querySelector('#catselect').appendChild(holder);
             var option = document.createElement("option");
-            option.innerHTML = "None"
+            option.innerHTML = "Unsorted"
             document.body.querySelector('#catselect').appendChild(option);
             for(let i = 0; i < this.state.category.length; i++){
                 var options = document.createElement("option");
                 var optionText = this.state.category[i].title
-                options.setAttribute("value", i + 1)
+                options.setAttribute("value", this.state.category[i].id)
                 options.innerHTML = optionText;
                 document.body.querySelector('#catselect').appendChild(options);
             }
@@ -182,24 +188,29 @@ class Home extends React.Component {
     unsortedcategoryClickHandler(category){
         var that = this;
         var userCookie = Cookies.get('user');
-        axios.post(`/category/${userCookie}/${category}`, {
+          axios.post(`/category/${userCookie}/${category}`, {
             title: category
           })
           .then(function (response) {
-            var feedArr = [];
-            var counter = 0;
-            for(let i = 0; i < response.data.length; i++){
-                parser.parseURL(CORS_PROXY + response.data[i].feed_url, function(err, feed) {
-                  feed.items.forEach(function(entry) {
-                    // console.log(entry)
+            if(response.data.length > 0){
+                var feedArr = [];
+                var counter = 0;
+                for(let i = 0; i < response.data.length; i++){
+                    parser.parseURL(CORS_PROXY + response.data[i].feed_url, function(err, feed) {
+                      feed.items.forEach(function(entry) {
+                        // console.log(entry)
 
-                    feedArr.push({title: feed.title, news: entry.title, link: entry.link, date: entry.pubDate});
-                  })
-                    counter++;
-                    if(counter == response.data.length){
-                        that.setState({feed: feedArr});
-                    }
-                })
+                        feedArr.push({title: feed.title, news: entry.title, link: entry.link, date: entry.pubDate});
+                      })
+                        counter++;
+                        if(counter == response.data.length){
+                            that.setState({feed: feedArr});
+                        }
+                    })
+                }
+            }
+            else{
+                that.setState({feed: []});
             }
           })
     }

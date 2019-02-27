@@ -22,7 +22,6 @@ class App extends React.Component {
     }
 
     clickHandler(event, password){
-        console.log(event, password)
         var that = this;
         axios.post('/user/login', {
             username: event[2],

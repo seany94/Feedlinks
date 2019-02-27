@@ -64,9 +64,8 @@ module.exports = (dbPoolInstance) => {
 
   let sorted = (req, res, cookie, callback) => {
     dbPoolInstance.query(`SELECT id FROM users WHERE id = ${cookie}`, (error, queryResult) =>{
-        let user = queryResult.rows[0].id;
         if(req.body.title === "unsorted"){
-             dbPoolInstance.query(`SELECT * FROM feeds WHERE cat_id IS NULL`, (error, queryResult) =>{
+             dbPoolInstance.query(`SELECT * FROM feeds WHERE user_id = ${cookie} AND cat_id IS NULL`, (error, queryResult) =>{
                 if( error ){
 
                 // invoke callback function with results after query has executed
@@ -80,7 +79,7 @@ module.exports = (dbPoolInstance) => {
             })
         }
         else{
-            dbPoolInstance.query(`SELECT * FROM feeds WHERE cat_id = ${req.body.title}`, (error, queryResult) =>{
+            dbPoolInstance.query(`SELECT * FROM feeds WHERE user_id = ${cookie} AND cat_id = ${req.body.title}`, (error, queryResult) =>{
                 if( error ){
 
                 // invoke callback function with results after query has executed
