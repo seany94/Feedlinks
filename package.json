@@ -97,7 +97,6 @@
     "rss-parser": "^3.6.2",
     "sanitize.css": ">=8.0.0",
     "sha256": "^0.2.0",
-    "slick-carousel": "^1.8.1",
     "webpack": "^4.29.4",
     "webpack-dev-middleware": ">=3.5.2",
     "webpack-hot-middleware": ">=2.24.3",

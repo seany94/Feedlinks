@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import Addfeed from '../components/addfeed';
 import Addcategory from '../components/addcategory';
 import Editcategory from '../components/editcategory';
+import Frame from '../components/iframe';
 
 const axios = require('axios');
 
@@ -53,7 +54,7 @@ class Home extends React.Component {
                       feed.items.forEach(function(entry) {
                         // console.log(entry)
 
-                        feedArr.push([feed.title, entry.title, entry.link, entry.pubDate]);
+                        feedArr.push({title: feed.title, news: entry.title, link: entry.link, date: entry.pubDate});
                       })
                         counter++;
                         if(counter == response.data.length){
@@ -81,7 +82,7 @@ class Home extends React.Component {
                       feed.items.forEach(function(entry) {
                         // console.log(entry)
 
-                        feedArr.push([feed.title, entry.title, entry.link, entry.pubDate]);
+                        feedArr.push({title: feed.title, news: entry.title, link: entry.link, date: entry.pubDate});
                       })
                         counter++;
                         if(counter == response.data.length){
@@ -213,11 +214,11 @@ class Home extends React.Component {
               <button type="button" className={Homecss.button} data-toggle="collapse" href="#news" role="button" aria-expanded="false" aria-controls="news">News Sites</button>
               <div className="collapse" id="news">
                 <div className="card card-body">
-                  AsiaOne
-                  <br/>
-                  Abc
-                  <br/>
                   BBC
+                  <br/>
+                  Reddit
+                  <br/>
+                  Channel NewsAsia
                 </div>
               </div>
             </div>
@@ -274,6 +275,12 @@ class Category extends React.Component{
 }
 
 class Feed extends React.Component{
+    constructor() {
+        super();
+        this.clickHandler = this.clickHandler.bind( this );
+        this.state = {
+        };
+    }
 
     componentDidMount(){
         if(document.body.querySelector('#loading') != null){
@@ -284,22 +291,70 @@ class Feed extends React.Component{
         }
     }
 
+    clickHandler(link){
+        if(document.body.querySelector('iframe') == null && document.body.querySelector('#url-link') == null){
+            var url = document.createElement("p")
+            url.innerHTML = link;
+            url.setAttribute("class", "alert alert-success");
+            url.setAttribute("id", "url-link");
+            document.body.querySelector('#url').appendChild(url);
+            var frame = document.createElement("IFRAME");
+            frame.setAttribute("src", `${link}`);
+            frame.setAttribute("width", "100%");
+            frame.setAttribute("height", "580px");
+            document.body.querySelector('#feedframe').appendChild(frame);
+        }
+        else{
+            document.body.querySelector('#feedframe').removeChild(document.body.querySelector('iframe'));
+            document.body.querySelector('#url').removeChild(document.body.querySelector('#url-link'));
+            var url = document.createElement("p")
+            url.innerHTML = link;
+            url.setAttribute("class", "alert alert-success");
+            url.setAttribute("id", "url-link");
+            document.body.querySelector('#url').appendChild(url);
+            var frame = document.createElement("IFRAME");
+            frame.setAttribute("src", `${link}`);
+            frame.setAttribute("width", "100%");
+            frame.setAttribute("height", "580px");
+            document.body.querySelector('#feedframe').appendChild(frame);
+        }
+    }
+
     render(){
-        // console.log(this.props.list[0])
-        var str = this.props.list[1];
+        // console.log(this.props.list)
+        var str = this.props.list.news;
         var re = str.replace(/&#039;/g, "\'");
         return(
             <div>
-                <div className="card mt-1">
-                  <div className="card-header">
-                    {this.props.list[0]}
-                  </div>
-                  <div className="card-body">
-                    <h5 className="card-title">{re}</h5>
-                    <p className="card-text">{this.props.list[2]}</p>
-                    <p className="card-text"><small className="text-muted">{this.props.list[3]}</small></p>
+                <div className="modal fade bd-example-modal-xl" id="feedurl" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div className="modal-dialog modal-xl" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> News Feed</h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div className="text-center" id="url">
+                          <div className="modal-body d-flex justify-content-center" id="feedframe">
+                          </div>
+                      </div>
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                   </div>
                 </div>
+                <a onClick={() => this.clickHandler(this.props.list.link)} data-toggle="modal" data-target="#feedurl">
+                    <div className="card mt-1">
+                      <div className="card-header">
+                        {this.props.list.title}
+                      </div>
+                      <div className="card-body">
+                            <h5 className="card-title">{re}</h5>
+                        <p className="card-text">{this.props.list.link}</p>
+                        <p className="card-text"><small className="text-muted">{this.props.list.date}</small></p>
+                      </div>
+                    </div>
+                </a>
             </div>
             );
     }
