@@ -157,6 +157,7 @@ class Home extends React.Component {
             for(let i = 0; i < this.state.category.length; i++){
                 var options = document.createElement("option");
                 var optionText = this.state.category[i].title
+                options.setAttribute("value", i + 1)
                 options.innerHTML = optionText;
                 document.body.querySelector('#catselect').appendChild(options);
             }
@@ -171,6 +172,7 @@ class Home extends React.Component {
             for(let i = 0; i < this.state.category.length; i++){
                 var options = document.createElement("option");
                 var optionText = this.state.category[i].title
+                options.setAttribute("value", i + 1)
                 options.innerHTML = optionText;
                 document.body.querySelector('#catselect').appendChild(options);
             }

@@ -7,10 +7,11 @@ module.exports = (dbPoolInstance) => {
   // `dbPoolInstance` is accessible within this function scope
 
   let addFeed = (req, res, cookie, callback) => {
-    const queryString = 'INSERT INTO feeds (feed_url, user_id) VALUES ($1, $2)';
+    const queryString = 'INSERT INTO feeds (feed_url, user_id, cat_id) VALUES ($1, $2, $3)';
     const values = [
             req.body.feed_url,
-            cookie
+            cookie,
+            req.body.option
         ];
     dbPoolInstance.query(queryString, values, (error, queryResult) =>{
         if( error ){
