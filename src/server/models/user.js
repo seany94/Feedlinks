@@ -77,12 +77,6 @@ module.exports = (dbPoolInstance) => {
 
               }
               else{
-                // dbPoolInstance.query(`SELECT id FROM users WHERE = '${req.body.name}'`, (error, queryResult) => {
-                //     const user = queryResult;
-                //     console.log(user)
-                //     res.cookie('loggedin', true);
-                //     res.cookie('user', user.id);
-                // });
 
                 // invoke callback function with results after query has executed
                 callback(null, queryResult.rows, values);
@@ -128,7 +122,7 @@ module.exports = (dbPoolInstance) => {
 
   let userCategory = (cookie, callback) => {
     dbPoolInstance.query(`SELECT * FROM users WHERE id = ${cookie}`, (error, queryResult) =>{
-        dbPoolInstance.query(`SELECT title, date_added FROM categories INNER JOIN users ON (users.id = categories.user_id AND users.id = ${cookie}) ORDER BY date_added`, (error, queryResult) =>{
+        dbPoolInstance.query(`SELECT title, date_added, categories.id FROM categories INNER JOIN users ON (users.id = categories.user_id AND users.id = ${cookie}) ORDER BY date_added`, (error, queryResult) =>{
             if( error ){
 
                 // invoke callback function with results after query has executed

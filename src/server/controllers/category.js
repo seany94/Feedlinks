@@ -23,9 +23,18 @@ module.exports = (db) => {
         });
     };
 
+    let tab = (req, res) => {
+        // console.log(req.body)
+        let cookie = req.cookies.user;
+        db.categories.sorted(req, res, cookie, (error, result) => {
+            res.send(result)
+        });
+    };
+
   return {
     addCat:addCat,
     del:del,
     edit:edit,
+    tab:tab,
   };
 };

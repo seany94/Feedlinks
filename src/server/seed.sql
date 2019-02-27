@@ -12,3 +12,4 @@ INSERT INTO categories(title, user_id, date_added) VALUES('World', 1, '2019-02-1
 
 INSERT INTO feeds(feed_url, user_id, cat_id, date_added) VALUES('http://feeds.bbci.co.uk/news/world/rss.xml', 1, 3, '2019-02-25');
 INSERT INTO feeds(feed_url, user_id, cat_id, date_added) VALUES('http://feeds.bbci.co.uk/news/uk/rss.xml', 1, 1, '2019-02-25');
+INSERT INTO feeds(feed_url, user_id, cat_id, date_added) VALUES('http://www.chinadaily.com.cn/rss/china_rss.xml', 1, null, '2019-02-25');

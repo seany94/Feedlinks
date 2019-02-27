@@ -10,9 +10,9 @@ module.exports = (app, db) => {
   app.get('/user/:id/category', user.category);
 
   app.post('/feed/add', feed.add);
-  app.post('/feed/news', feed.news);
 
   app.post('/category/add', category.addCat);
   app.delete('/category/delete', category.del);
   app.put('/category/edit/:id', category.edit);
+  app.post('/category/:id/:title', category.tab);
 };

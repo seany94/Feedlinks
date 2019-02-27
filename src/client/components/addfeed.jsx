@@ -32,6 +32,7 @@ class Addfeed extends React.Component {
     }
 
     render() {
+        // console.log(this.props)
         return (
             <div>
                 <div className="form-group">
@@ -40,12 +41,7 @@ class Addfeed extends React.Component {
                 </div>
                 <div className="form-group">
                     <label>Add to Category</label>
-                    <select className="form-control" id="exampleFormControlSelect1">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
+                    <select className="form-control" id="catselect">
                     </select>
                 </div>
                 <button type="button" onClick={this.clickHandler} className="btn btn-primary mr-2" id="addFeed" data-dismiss="modal">Add</button>

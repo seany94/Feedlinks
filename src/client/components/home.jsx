@@ -19,9 +19,12 @@ class Home extends React.Component {
         super();
         this.searchChangeHandler = this.searchChangeHandler.bind( this );
         this.addfeedClickHandler = this.addfeedClickHandler.bind( this );
+        this.optionfeedClickHandler = this.optionfeedClickHandler.bind( this );
         this.addcategoryClickHandler = this.addcategoryClickHandler.bind( this );
         this.delcategoryClickHandler = this.delcategoryClickHandler.bind( this );
         this.editcategoryClickHandler = this.editcategoryClickHandler.bind( this );
+        this.unsortedcategoryClickHandler = this.unsortedcategoryClickHandler.bind( this );
+        this.sortedcategoryClickHandler = this.sortedcategoryClickHandler.bind( this );
         this.state = {
             name: "",
             photo_url: "",
@@ -146,10 +149,93 @@ class Home extends React.Component {
           });
     }
 
+    optionfeedClickHandler(category){
+        if(document.body.querySelector('option') == null){
+            var option = document.createElement("option");
+            option.innerHTML = "None"
+            document.body.querySelector('#catselect').appendChild(option);
+            for(let i = 0; i < this.state.category.length; i++){
+                var options = document.createElement("option");
+                var optionText = this.state.category[i].title
+                options.innerHTML = optionText;
+                document.body.querySelector('#catselect').appendChild(options);
+            }
+        }
+        else{
+            while (document.body.querySelector('#catselect').firstChild) {
+                document.body.querySelector('#catselect').removeChild(document.body.querySelector('#catselect').firstChild);
+            }
+            var option = document.createElement("option");
+            option.innerHTML = "None"
+            document.body.querySelector('#catselect').appendChild(option);
+            for(let i = 0; i < this.state.category.length; i++){
+                var options = document.createElement("option");
+                var optionText = this.state.category[i].title
+                options.innerHTML = optionText;
+                document.body.querySelector('#catselect').appendChild(options);
+            }
+        }
+    }
+
+    unsortedcategoryClickHandler(category){
+        var that = this;
+        var userCookie = Cookies.get('user');
+        axios.post(`/category/${userCookie}/${category}`, {
+            title: category
+          })
+          .then(function (response) {
+            var feedArr = [];
+            var counter = 0;
+            for(let i = 0; i < response.data.length; i++){
+                parser.parseURL(CORS_PROXY + response.data[i].feed_url, function(err, feed) {
+                  feed.items.forEach(function(entry) {
+                    // console.log(entry)
+
+                    feedArr.push({title: feed.title, news: entry.title, link: entry.link, date: entry.pubDate});
+                  })
+                    counter++;
+                    if(counter == response.data.length){
+                        that.setState({feed: feedArr});
+                    }
+                })
+            }
+          })
+    }
+
+    sortedcategoryClickHandler(category){
+        var that = this;
+        var userCookie = Cookies.get('user');
+        axios.post(`/category/${userCookie}/${category}`, {
+            title: category
+          })
+          .then(function (response) {
+            if(response.data.length > 0){
+                var feedArr = [];
+                var counter = 0;
+                for(let i = 0; i < response.data.length; i++){
+                    parser.parseURL(CORS_PROXY + response.data[i].feed_url, function(err, feed) {
+                      feed.items.forEach(function(entry) {
+                        // console.log(entry)
+
+                        feedArr.push({title: feed.title, news: entry.title, link: entry.link, date: entry.pubDate});
+                      })
+                        counter++;
+                        if(counter == response.data.length){
+                            that.setState({feed: feedArr});
+                        }
+                    })
+                }
+            }
+            else{
+                that.setState({feed: []});
+            }
+          })
+    }
+
     render() {
         // console.log(this.state.feed)
         // console.log(this.state.category)
-        const categories = this.state.category.map(tab => {return <Category list={tab} delete={this.delcategoryClickHandler} edit={this.editcategoryClickHandler}></Category>});
+        const categories = this.state.category.map(tab => {return <Category list={tab} delete={this.delcategoryClickHandler} edit={this.editcategoryClickHandler} sort={this.sortedcategoryClickHandler}></Category>});
         const feeds = this.state.feed.map(link => {return <Feed list={link}></Feed>});
 
     return (
@@ -191,10 +277,13 @@ class Home extends React.Component {
                     </div>
                   </div>
                 </div>
-              <button type="button" className={Homecss.button} data-toggle="modal" data-target="#addFeed"><i className="fa fa-plus"></i>&nbsp; &nbsp;Feed &nbsp; &nbsp; &nbsp;</button>
+              <button type="button" onClick={this.optionfeedClickHandler} className={Homecss.button} data-toggle="modal" data-target="#addFeed"><i className="fa fa-plus"></i>&nbsp; &nbsp;Feed &nbsp; &nbsp; &nbsp;</button>
               <button type="button" className={Homecss.button} data-toggle="modal" data-target="#addCat"><i className="fa fa-plus"></i> Category&nbsp;</button>
               <br/>
               <div>
+                <div className={Homecss.list}>
+                    <a onClick={() => this.unsortedcategoryClickHandler("unsorted")}>Unsorted</a>
+                </div>
                   {categories}
               </div>
             </div>
@@ -241,7 +330,7 @@ class Category extends React.Component{
     }
 
     render(){
-        // console.log(this.props.list.title)
+        // console.log(this.props.list)
         return(
             <div>
                 <div className="modal fade" id={"editFeed" + this.props.list.title} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -260,7 +349,7 @@ class Category extends React.Component{
                   </div>
                 </div>
                 <div className={Homecss.list}>
-                    {this.props.list.title}
+                    <a onClick={() => this.props.sort(this.props.list.id)}>{this.props.list.title}</a>
                     <span> </span>
                     <a onClick={() => {this.props.delete(this.props.list)}}>
                         <i className="far fa-trash-alt" id="del"></i>

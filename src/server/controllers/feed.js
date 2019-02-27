@@ -9,13 +9,7 @@ module.exports = (db) => {
         });
     };
 
-    let news = (req, res) => {
-        console.log(req.body)
-
-    };
-
   return {
     add:add,
-    news:news,
   };
 };
