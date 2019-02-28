@@ -23,12 +23,22 @@ Milestone:-
 
 MVP: Working login/signup page with the main react app showing all feeds added
 
-Further: Add feed form and category tabs implemented
+Further: Validation of login/signup page
+
+Further: Add feed and category forms
+
+Further: Category tabs implemented
+
+Further: Add new feed to category through add feed form
 
 Further: Search function with feed that user want to display in home tab
+
+Further: Feed in cards and click able modal
+
+Further: Clicking feed card will open respective modal with the web page of the feed url in the Iframe
 
 Further: Working Iframe for the popular news outlets tab
 
 Further: Mark as read feed move to archive tab
 
-Further: Bootstrap 
+Further: Bootstrap/SASS
