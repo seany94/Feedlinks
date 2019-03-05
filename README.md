@@ -42,3 +42,7 @@ Further: Working Iframe for the popular news outlets tab
 Further: Mark as read feed move to archive tab
 
 Further: Bootstrap/SASS
+
+Further: Alertify when successfully added new feed
+
+Further: Add number of feed saved in each category tab as counters
