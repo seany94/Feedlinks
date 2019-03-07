@@ -311,6 +311,16 @@ class Home extends React.Component {
                     <img src="https://i.redd.it/ad27atzy1zxz.gif" alt="" id="loading" width="920px"/>
                     {feeds}
                 </div>
+                <div className={Homecss.footer}>
+                    Copyright 2019 <span> </span>
+                    Created with &hearts; by <span>Sean Chan</span><span> </span>
+                    <i className="fas fa-at"></i>
+                    <span> </span>
+                    <a href="https://github.com/seany94" target="_blank"><i class="fab fa-github-square"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/seancwl" target="_blank"><i className="fab fa-linkedin"></i>
+                    </a>
+                </div>
             </div>
             <div className="col-2">
               <button type="button" className={Homecss.button} data-toggle="collapse" href="#news" role="button" aria-expanded="false" aria-controls="news">News Sites</button>
