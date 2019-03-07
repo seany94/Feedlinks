@@ -1,5 +1,6 @@
 # Feedlinks
 Heroku Link:- https://feed-links.herokuapp.com/
+Do load unsafe script on your url-bar as iframe might not work properly
 Login using my account if you do not want to signup:- Username: seanc, Password: sc123
 
 Using node.js, react.js, express, postgres, DOM, AJAX, Bootstrap and webpack
