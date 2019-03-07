@@ -1,5 +1,7 @@
 const pg = require('pg');
-const pokemon = require('./models/pokemon');
+const feeds = require('./models/feed');
+const users = require('./models/user');
+const categories = require('./models/category');
 const url = require('url');
 
 var configs;
@@ -18,9 +20,9 @@ if (process.env.DATABASE_URL) {
   };
 } else {
   configs = {
-    user: 'akira',
+    user: 'sean',
     host: '127.0.0.1',
-    database: 'testdb',
+    database: 'feedlinks',
     port: 5432
   };
 }
@@ -35,7 +37,9 @@ module.exports = {
   /*
    * ADD APP MODELS HERE
    */
-  pokemon: pokemon(pool),
+  users: users(pool),
+  feeds: feeds(pool),
+  categories: categories(pool),
 
   //make queries directly from here
   queryInterface: (text, params, callback) => {

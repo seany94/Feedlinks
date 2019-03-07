@@ -1,9 +1,18 @@
 module.exports = (app, db) => {
-  const pokemon = require('./controllers/pokemon')(db);
-  const query = require('./controllers/query')(db);
+  const user = require('./controllers/user')(db);
+  const feed = require('./controllers/feed')(db);
+  const category = require('./controllers/category')(db);
 
-  app.get('/query', query.get);
-  app.get('/pokemon/:id', pokemon.get);
+  app.post('/user/login', user.login);
+  app.post('/user/signup', user.signup);
+  app.get('/user/:id', user.info);
+  app.get('/user/:id/feed', user.feed);
+  app.get('/user/:id/category', user.category);
 
-  app.get('/api/pokemon/:id', pokemon.apiget);
+  app.post('/feed/add', feed.add);
+
+  app.post('/category/add', category.addCat);
+  app.delete('/category/delete', category.del);
+  app.put('/category/edit/:id', category.edit);
+  app.post('/category/:id/:title', category.tab);
 };

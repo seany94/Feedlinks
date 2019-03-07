@@ -2,6 +2,7 @@ const http = require('http');
 const express = require('express');
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser')
 const db = require('./db');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -20,11 +21,15 @@ const setupAppRoutes =
 
 const app = express();
 
+// This line allow public folder to be used
+app.use(express.static('public'));
+
 app.set('env', process.env.NODE_ENV);
 
 // Set up middleware
 app.use(methodOverride('_method'));
 app.use(cookieParser());
+app.use(bodyParser.json())
 app.use(
   express.urlencoded({
     extended: true
