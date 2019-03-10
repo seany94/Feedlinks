@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import Addfeed from '../components/addfeed';
 import Addcategory from '../components/addcategory';
 import Editcategory from '../components/editcategory';
+import Feedcounter from '../components/feedcounter';
 import Frame from '../components/iframe';
 
 const axios = require('axios');
@@ -267,7 +268,9 @@ class Home extends React.Component {
         const feeds = this.state.feed.map(link => {return <Feed list={link}></Feed>});
         const newsites = {
             backgroundColor: 'darkslategray',
-            borderColor: 'darkslategray'
+            borderColor: 'darkslategray',
+            marginTop: '-20px',
+            zIndex: '-1'
         }
 
     return (
@@ -346,9 +349,8 @@ class Home extends React.Component {
                 </div>
             </div>
             <div className="col-2">
-                <div className="d-flex justify-content-center">
+                <Feedcounter />
                   <button type="button" className={Homecss.button} data-toggle="collapse" href="#news" role="button" aria-expanded="false" aria-controls="news">News Sites</button>
-                </div>
                   <div className="collapse" id="news">
                     <div className="card card-body text-center" style={newsites}>
                       <a href="https://www.bbc.com/news/10628494" target="_blank">BBC</a>

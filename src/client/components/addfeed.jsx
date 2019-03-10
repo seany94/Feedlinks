@@ -33,7 +33,6 @@ class Addfeed extends React.Component {
             option: this.state.select
           })
           .then(function (response) {
-            that.setState({feed_url: ""});
             that.props.addfeed(that.state.select);
           })
     }
