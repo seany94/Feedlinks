@@ -102,7 +102,7 @@ class Home extends React.Component {
     }
 
     searchChangeHandler(event){
-        const feeds = Array.from(document.querySelectorAll('.card'));
+        const feeds = Array.from(document.querySelectorAll('#feed_card'));
         let filter = document.querySelector('#search').value.toLowerCase();
         for (let i = 0; i < feeds.length; i++) {
             let txtValue = feeds[i].textContent;
@@ -250,6 +250,10 @@ class Home extends React.Component {
         // console.log(this.state.category)
         const categories = this.state.category.map(tab => {return <Category list={tab} delete={this.delcategoryClickHandler} edit={this.editcategoryClickHandler} sort={this.sortedcategoryClickHandler}></Category>});
         const feeds = this.state.feed.map(link => {return <Feed list={link}></Feed>});
+        const newsites = {
+            backgroundColor: 'darkslategray',
+            borderColor: 'darkslategray'
+        }
 
     return (
       <div>
@@ -316,23 +320,29 @@ class Home extends React.Component {
                     Created with &hearts; by <span>Sean Chan</span><span> </span>
                     <i className="fas fa-at"></i>
                     <span> </span>
-                    <a href="https://github.com/seany94" target="_blank"><i class="fab fa-github-square"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/seancwl" target="_blank"><i className="fab fa-linkedin"></i>
-                    </a>
+                    <div className={Homecss.footer_icons}>
+                        <a href="https://github.com/seany94" target="_blank"><i className="fab fa-github-square"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/seancwl" target="_blank"><i className="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://seany94.github.io/" target="_blank"><i className="fab fa-chrome"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div className="col-2">
-              <button type="button" className={Homecss.button} data-toggle="collapse" href="#news" role="button" aria-expanded="false" aria-controls="news">News Sites</button>
-              <div className="collapse" id="news">
-                <div className="card card-body text-right">
-                  <a href="https://www.bbc.com/news/10628494" target="_blank">BBC</a>
-                  <a href="https://www.channelnewsasia.com/news/rss" target="_blank">Channel NewsAsia</a>
-                  <a href="http://www.chinadaily.com.cn/rss/index.html" target="_blank">China Daily</a>
-                  <a href="https://www.washingtonpost.com/discussions/2018/10/12/washington-post-rss-feeds/?noredirect=on&utm_term=.0199cfea8cd8" target="_blank">The Washington Post</a>
-                  <a href="https://www.dailytelegraph.com.au/help-rss" target="_blank">Daily Telegraph</a>
+                <div className="d-flex justify-content-center">
+                  <button type="button" className={Homecss.button} data-toggle="collapse" href="#news" role="button" aria-expanded="false" aria-controls="news">News Sites</button>
                 </div>
-              </div>
+                  <div className="collapse" id="news">
+                    <div className="card card-body text-center" style={newsites}>
+                      <a href="https://www.bbc.com/news/10628494" target="_blank">BBC</a>
+                      <a href="https://www.channelnewsasia.com/news/rss" target="_blank">Channel NewsAsia</a>
+                      <a href="http://www.chinadaily.com.cn/rss/index.html" target="_blank">China Daily</a>
+                      <a href="https://www.washingtonpost.com/discussions/2018/10/12/washington-post-rss-feeds/?noredirect=on&utm_term=.0199cfea8cd8" target="_blank">The Washington Post</a>
+                      <a href="https://www.dailytelegraph.com.au/help-rss" target="_blank">Daily Telegraph</a>
+                    </div>
+                  </div>
             </div>
         </div>
       </div>
@@ -456,7 +466,7 @@ class Feed extends React.Component{
                   </div>
                 </div>
                 <a onClick={() => this.clickHandler(this.props.list.link)} data-toggle="modal" data-target="#feedurl">
-                    <div className="card mt-1">
+                    <div className="card mt-1" id="feed_card">
                       <div className="card-header">
                         {this.props.list.title}
                       </div>

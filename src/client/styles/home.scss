@@ -231,8 +231,21 @@
 	background-color: #65919C;
 }
 
-.footer{
+:local .footer{
 	text-align: center;
 	font-size: 12px;
 	color: rgb(62, 205, 217);
+}
+
+:local .footer_icons{
+	display: inline;
+	font-size: 20px;
+}
+
+:local .footer_icons a{
+	padding: 2px;
+}
+
+:local .newsites a{
+	color: white;
 }
