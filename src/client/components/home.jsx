@@ -9,6 +9,7 @@ import Editcategory from '../components/editcategory';
 import Frame from '../components/iframe';
 
 const axios = require('axios');
+const alertify = require('alertifyjs');
 
 const Parser = require('rss-parser');
 const parser = new Parser();
@@ -32,6 +33,7 @@ class Home extends React.Component {
             category: [],
             search: "",
             feed_add: false,
+            feed_cat: "",
             category_add: false,
             category_del: false,
             category_edit: false
@@ -61,6 +63,9 @@ class Home extends React.Component {
                       })
                         counter++;
                         if(counter == response.data.length){
+                            if(that.state.feed_add == true){
+                                alertify.success(`Successfully added new feed to '${that.state.feed_cat}'`);
+                            }
                             that.setState({feed: feedArr});
                         }
                     })
@@ -89,6 +94,9 @@ class Home extends React.Component {
                       })
                         counter++;
                         if(counter == response.data.length){
+                            if(that.state.feed_add == true){
+                                alertify.success(`Successfully added new feed to '${that.state.feed_cat}'`);
+                            }
                             that.setState({feed: feedArr});
                         }
                     })
@@ -117,7 +125,14 @@ class Home extends React.Component {
 
     addfeedClickHandler(event){
         this.componentDidMount();
-        this.setState({feed_add: true});
+        if(isNaN(event)){
+            this.setState({feed_add: true, feed_cat: event});
+        }
+        else{
+            var catIndex = parseInt(event) - 1
+            var catTitle = this.state.category[catIndex].title
+            this.setState({feed_add: true, feed_cat: catTitle});
+        }
     }
 
     addcategoryClickHandler(event){

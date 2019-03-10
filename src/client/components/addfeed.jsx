@@ -33,8 +33,8 @@ class Addfeed extends React.Component {
             option: this.state.select
           })
           .then(function (response) {
-            that.setState({feed_url: "", select: ""});
-            that.props.addfeed();
+            that.setState({feed_url: ""});
+            that.props.addfeed(that.state.select);
           })
     }
 
@@ -50,6 +50,12 @@ class Addfeed extends React.Component {
                     <label>Add to Category</label>
                     <select className="form-control" id="catselect" onChange={this.selectChangeHandler}>
                     </select>
+                </div>
+                <div className="alert alert-danger alert-dismissible fade show text-justify" role="alert">
+                  <strong>Disclaimer: </strong>Adding new feed takes time to proccess but do not worry, a notification will pop up to inform you that the feed has been added as well as the page re-rendered so do not be alarm.
+                  <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
                 <button type="button" onClick={this.clickHandler} className="btn btn-primary mr-2" id="addFeed" data-dismiss="modal">Add</button>
                 <span></span>
