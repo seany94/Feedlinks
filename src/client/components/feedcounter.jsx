@@ -79,12 +79,6 @@ class Feedcounter extends React.Component {
                           <h6 className="text-center">Total RSS Feeds saved {count}</h6>
                           <div className={Homecss.feed_links}>{counter}</div>
                           <br />
-                          <div className="alert alert-danger alert-dismissible fade show text-justify" role="alert">
-                          <strong>Instruction: </strong>Please click the empty area below the modal if you want to dismiss the second pop up modal. Currently the close button close all modals.
-                          <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
                         </div>
                       </div>
                     </div>
@@ -107,7 +101,8 @@ class Counter extends React.Component {
     constructor() {
     super();
     this.clickHandler = this.clickHandler.bind( this );
-    this.editHandler = this.editHandler.bind( this );
+    this.editModalHandler = this.editModalHandler.bind( this );
+    this.closeModalHandler = this.closeModalHandler.bind( this );
 
     this.state = {
       feed_links: [],
@@ -123,11 +118,16 @@ class Counter extends React.Component {
       this.setState({feed_links: this.props.list.feed_url, feed_id: this.props.list.id})
     }
 
-    editHandler(feed){
+    editModalHandler(feed){
       $(feed).modal({
           backdrop: false,
           show: true
       })
+    }
+
+    closeModalHandler(feed){
+      console.log(feed)
+      $(feed).modal('hide')
     }
 
     clickHandler(link, id){
@@ -139,7 +139,7 @@ class Counter extends React.Component {
       const modal = {
           color: 'black',
           textAlign: 'left',
-          marginTop: '455px'
+          marginTop: '460px'
       }
 
       const font = {
@@ -153,12 +153,12 @@ class Counter extends React.Component {
                   <div className="modal-content">
                     <div className="modal-header">
                       <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Edit Feed Link ({this.state.feed_links})</h5>
-                      <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                      <button type="button" className="close" onClick={() => {this.closeModalHandler('#editFeed' + this.state.feed_id)}} aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
                     <div className="modal-body" id="modal-editfeed">
-                      <Editfeed feed_url={this.state.feed_links} feed_id={this.state.feed_id} editfeed={this.clickHandler}/>
+                      <Editfeed feed_url={this.state.feed_links} feed_id={this.state.feed_id} editfeed={this.clickHandler} closefeed={this.closeModalHandler}/>
                     </div>
                   </div>
                 </div>
@@ -170,7 +170,7 @@ class Counter extends React.Component {
                     <i className="far fa-trash-alt"></i>
                 </a>
                 <span> </span>
-                <a onClick={() => {this.editHandler('#editFeed' + this.state.feed_id)}}>
+                <a onClick={() => {this.editModalHandler('#editFeed' + this.state.feed_id)}}>
                     <i className="far fa-edit"></i>
                 </a>
               </div>

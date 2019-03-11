@@ -38,7 +38,7 @@ class Editfeed extends React.Component {
                 </div>
                 <button type="button" onClick={() => {this.clickHandler(this.state.feed_link, this.props.feed_id)}} className="btn btn-primary mr-2" id="editCat" data-dismiss="modal">Edit</button>
                 <span></span>
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" className="btn btn-secondary" onClick={() => {this.props.closefeed('#editFeed' + this.props.feed_id)}}>Close</button>
             </div>
         );
     }
