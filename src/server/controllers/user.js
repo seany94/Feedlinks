@@ -36,11 +36,19 @@ module.exports = (db) => {
         });
     };
 
+    let feedCount = (req, res) => {
+        let cookie = req.cookies.user;
+        db.users.userFeedCount(cookie, (error, result, values) => {
+            res.send(result)
+        });
+    };
+
   return {
     login:login,
     signup:signup,
     info:info,
     feed:feed,
-    category:category
+    category:category,
+    feedCount:feedCount
   };
 };
