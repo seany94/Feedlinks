@@ -48,7 +48,44 @@ module.exports = (dbPoolInstance) => {
     }
   };
 
+  let delFeed = (req, res, cookie, callback) => {
+    const queryString = `DELETE FROM feeds WHERE feed_url = '${req.body.feed_url}'`;
+
+    dbPoolInstance.query(queryString, (error, queryResult) =>{
+        if( error ){
+            // invoke callback function with results after query has executed
+            callback(error, null, null);
+
+          }
+          else{
+
+            // invoke callback function with results after query has executed
+            callback(null, queryResult.rows);
+          }
+    })
+  };
+
+  let editFeed = (req, res, cookie, callback) => {
+    dbPoolInstance.query(`SELECT id FROM users WHERE id = ${cookie}`, (error, queryResult) =>{
+        dbPoolInstance.query(`UPDATE feeds SET feed_url = '${req.body.feed_url}' WHERE user_id = ${cookie} AND feeds.id = ${req.body.feed_id}`, (error, queryResult) =>{
+            if( error ){
+
+            // invoke callback function with results after query has executed
+                callback(error, null, null, null);
+
+            }
+            else{
+            // invoke callback function with results after query has executed
+                callback(null, queryResult.rows);
+            }
+        })
+    // })
+    })
+  };
+
   return {
-    addFeed
+    addFeed,
+    delFeed,
+    editFeed
   };
 };

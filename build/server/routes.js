@@ -7,9 +7,12 @@ module.exports = (app, db) => {
   app.post('/user/signup', user.signup);
   app.get('/user/:id', user.info);
   app.get('/user/:id/feed', user.feed);
+  app.get('/user/:id/feed/counter', user.feedCount);
   app.get('/user/:id/category', user.category);
 
   app.post('/feed/add', feed.add);
+  app.delete('/feed/delete', feed.del);
+  app.put('/feed/edit/:id', feed.edit);
 
   app.post('/category/add', category.addCat);
   app.delete('/category/delete', category.del);

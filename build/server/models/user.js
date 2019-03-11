@@ -138,11 +138,30 @@ module.exports = (dbPoolInstance) => {
     })
   };
 
+  let userFeedCount = (cookie, callback) => {
+    dbPoolInstance.query(`SELECT * FROM users WHERE id = ${cookie}`, (error, queryResult) =>{
+        dbPoolInstance.query(`SELECT feed_url, date_added, feeds.id FROM feeds INNER JOIN users ON (users.id = feeds.user_id AND users.id = ${cookie}) ORDER BY date_added`, (error, queryResult) =>{
+            if( error ){
+
+                // invoke callback function with results after query has executed
+                callback(error, null, null);
+
+              }
+              else{
+
+                // invoke callback function with results after query has executed
+                callback(null, queryResult.rows);
+              }
+        })
+    })
+  };
+
   return {
     signin,
     register,
     userFind,
     userFeed,
-    userCategory
+    userCategory,
+    userFeedCount
   };
 };
