@@ -15,10 +15,6 @@ class Editfeed extends React.Component {
     };
   }
 
-    // componentDidMount(){
-    //     console.log(this.props)
-    // }
-
     feedChangeHandler(event){
         // console.log(this.props)
         this.setState({feed_link: event.target.value});

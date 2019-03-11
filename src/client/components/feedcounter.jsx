@@ -17,7 +17,8 @@ class Feedcounter extends React.Component {
       feedcounter: [],
       completed: false,
       feed_del: false,
-      feed_edit: false
+      feed_edit: false,
+      updated: false
     };
   }
 
@@ -31,6 +32,10 @@ class Feedcounter extends React.Component {
         .then(function (response) {
           that.setState({completed: true});
         })
+    }
+
+    componentWillReceiveProps(){
+        this.componentDidMount()
     }
 
     delFeedClickHandler(feed){
@@ -126,7 +131,6 @@ class Counter extends React.Component {
     }
 
     closeModalHandler(feed){
-      console.log(feed)
       $(feed).modal('hide')
     }
 
