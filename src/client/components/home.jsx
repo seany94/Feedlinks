@@ -269,8 +269,7 @@ class Home extends React.Component {
         const newsites = {
             backgroundColor: 'darkslategray',
             borderColor: 'darkslategray',
-            marginTop: '-20px',
-            zIndex: '-1'
+            marginTop: '0px'
         }
 
     return (

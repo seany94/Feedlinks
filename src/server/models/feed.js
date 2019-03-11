@@ -67,8 +67,7 @@ module.exports = (dbPoolInstance) => {
 
   let editFeed = (req, res, cookie, callback) => {
     dbPoolInstance.query(`SELECT id FROM users WHERE id = ${cookie}`, (error, queryResult) =>{
-        let user = queryResult.rows[0].id;
-        dbPoolInstance.query(`UPDATE feeds SET feed_url = '${req.body.feed_url}' WHERE user_id = ${cookie}`, (error, queryResult) =>{
+        dbPoolInstance.query(`UPDATE feeds SET feed_url = '${req.body.feed_url}' WHERE user_id = ${cookie} AND feeds.id = ${req.body.feed_id}`, (error, queryResult) =>{
             if( error ){
 
             // invoke callback function with results after query has executed

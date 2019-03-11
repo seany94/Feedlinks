@@ -25,8 +25,7 @@ class Editfeed extends React.Component {
     }
 
     clickHandler(link, id){
-        console.log(link, id)
-        // this.props.editfeed(title, id)
+        this.props.editfeed(link, id)
     }
 
     render() {

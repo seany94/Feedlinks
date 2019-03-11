@@ -44,17 +44,17 @@ class Feedcounter extends React.Component {
         });
     }
 
-    editFeedClickHandler(feed, link){
-        // var that = this;
-        // var userCookie = Cookies.get('user');
-        // axios.put(`/feed/edit/${userCookie}`, {
-        //     title: category,
-        //     name: title
-        //   })
-        //   .then(response => {
-        //     that.componentDidMount();
-        //     that.setState({feed_edit: true});
-        //   });
+    editFeedClickHandler(link, id){
+        var that = this;
+        var userCookie = Cookies.get('user');
+        axios.put(`/feed/edit/${userCookie}`, {
+            feed_url: link,
+            feed_id: id
+          })
+          .then(response => {
+            that.componentDidMount();
+            that.setState({feed_edit: true});
+          });
     }
 
     render() {
@@ -76,7 +76,9 @@ class Feedcounter extends React.Component {
                           </button>
                         </div>
                         <div className="modal-body" id="modal-feedcounter">
-                          {counter}
+                          <h6 className="text-center">Total RSS Feeds saved {count}</h6>
+                          <div className={Homecss.feed_links}>{counter}</div>
+                          <br />
                           <div className="alert alert-danger alert-dismissible fade show text-justify" role="alert">
                           <strong>Instruction: </strong>Please click the empty area below the modal if you want to dismiss the second pop up modal. Currently the close button close all modals.
                           <button type="button" className="close" data-dismiss="alert" aria-label="Close">
@@ -128,8 +130,8 @@ class Counter extends React.Component {
       })
     }
 
-    clickHandler(feed, url){
-        this.props.edit(feed, url)
+    clickHandler(link, id){
+        this.props.edit(link, id)
     }
 
     render() {
@@ -137,7 +139,11 @@ class Counter extends React.Component {
       const modal = {
           color: 'black',
           textAlign: 'left',
-          marginTop: '350px'
+          marginTop: '455px'
+      }
+
+      const font = {
+          fontSize: '12px'
       }
 
         return (
@@ -157,15 +163,17 @@ class Counter extends React.Component {
                   </div>
                 </div>
               </div>
-              {this.state.feed_links}
-              <span> </span>
-              <a onClick={() => {this.props.delete(this.state.feed_links)}}>
-                  <i className="far fa-trash-alt"></i>
-              </a>
-              <span> </span>
-              <a onClick={() => {this.editHandler('#editFeed' + this.state.feed_id)}}>
-                  <i className="far fa-edit"></i>
-              </a>
+              <div style={font}>
+                {this.state.feed_links}
+                <span> </span>
+                <a onClick={() => {this.props.delete(this.state.feed_links)}}>
+                    <i className="far fa-trash-alt"></i>
+                </a>
+                <span> </span>
+                <a onClick={() => {this.editHandler('#editFeed' + this.state.feed_id)}}>
+                    <i className="far fa-edit"></i>
+                </a>
+              </div>
             </div>
         );
     }
