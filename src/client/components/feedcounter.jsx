@@ -3,6 +3,7 @@ import React from 'react';
 import Cookies from 'js-cookie';
 
 import Homecss from '../styles/home.scss'
+import Editfeed from '../components/editfeed';
 
 const axios = require('axios');
 
@@ -76,6 +77,12 @@ class Feedcounter extends React.Component {
                         </div>
                         <div className="modal-body" id="modal-feedcounter">
                           {counter}
+                          <div className="alert alert-danger alert-dismissible fade show text-justify" role="alert">
+                          <strong>Instruction: </strong>Please click the empty area below the modal if you want to dismiss the second pop up modal. Currently the close button close all modals.
+                          <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
                         </div>
                       </div>
                     </div>
@@ -97,32 +104,66 @@ class Feedcounter extends React.Component {
 class Counter extends React.Component {
     constructor() {
     super();
+    this.clickHandler = this.clickHandler.bind( this );
+    this.editHandler = this.editHandler.bind( this );
 
     this.state = {
       feed_links: [],
+      feed_id: [],
     };
   }
 
     componentDidMount(){
-      this.setState({feed_links: this.props.list.feed_url})
+      this.setState({feed_links: this.props.list.feed_url, feed_id: this.props.list.id})
     }
 
     componentWillReceiveProps(){
-      this.setState({feed_links: this.props.list.feed_url})
+      this.setState({feed_links: this.props.list.feed_url, feed_id: this.props.list.id})
+    }
+
+    editHandler(feed){
+      $(feed).modal({
+          backdrop: false,
+          show: true
+      })
+    }
+
+    clickHandler(feed, url){
+        this.props.edit(feed, url)
     }
 
     render() {
-      // console.log(this.state.feed_links)
+      // console.log(this.state.feed_id)
+      const modal = {
+          color: 'black',
+          textAlign: 'left',
+          marginTop: '350px'
+      }
 
         return (
             <div className={Homecss.link}>
+              <div className="modal fade" id={"editFeed" + this.state.feed_id} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style={modal}>
+                <div className="modal-dialog" role="document">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Edit Feed Link ({this.state.feed_links})</h5>
+                      <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div className="modal-body" id="modal-editfeed">
+                      <Editfeed feed_url={this.state.feed_links} feed_id={this.state.feed_id} editfeed={this.clickHandler}/>
+                    </div>
+                  </div>
+                </div>
+              </div>
               {this.state.feed_links}
               <span> </span>
               <a onClick={() => {this.props.delete(this.state.feed_links)}}>
                   <i className="far fa-trash-alt"></i>
               </a>
               <span> </span>
-              <a data-toggle="modal" data-target={"#editFeed" + this.state.feed_links}>
+              <a onClick={() => {this.editHandler('#editFeed' + this.state.feed_id)}}>
                   <i className="far fa-edit"></i>
               </a>
             </div>

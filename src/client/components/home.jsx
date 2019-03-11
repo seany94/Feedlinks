@@ -349,7 +349,7 @@ class Home extends React.Component {
                 </div>
             </div>
             <div className="col-2">
-                <Feedcounter />
+                  <Feedcounter />
                   <button type="button" className={Homecss.button} data-toggle="collapse" href="#news" role="button" aria-expanded="false" aria-controls="news">News Sites</button>
                   <div className="collapse" id="news">
                     <div className="card card-body text-center" style={newsites}>
@@ -383,16 +383,16 @@ class Category extends React.Component{
         // console.log(this.props.list)
         return(
             <div>
-                <div className="modal fade" id={"editFeed" + this.props.list.title} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id={"editCat" + this.props.list.title} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div className="modal-dialog" role="document">
                     <div className="modal-content">
                       <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Edit Feed Title</h5>
+                        <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Edit Category Title ({this.props.list.title})</h5>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div className="modal-body" id="modal-editfeed">
+                      <div className="modal-body" id="modal-editcat">
                         <Editcategory title={this.props.list.title} editcategory={this.clickHandler}/>
                       </div>
                     </div>
@@ -404,7 +404,7 @@ class Category extends React.Component{
                     <a onClick={() => {this.props.delete(this.props.list)}}>
                         <i className="far fa-trash-alt" id="del"></i>
                     </a>
-                    <a data-toggle="modal" data-target={"#editFeed" + this.props.list.title}>
+                    <a data-toggle="modal" data-target={"#editCat" + this.props.list.title}>
                         <i className="far fa-edit"></i>
                     </a>
                 </div>
