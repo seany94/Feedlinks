@@ -65,7 +65,7 @@ class Home extends React.Component {
                         counter++;
                         if(counter == response.data.length){
                             if(that.state.feed_add == true){
-                                alertify.success(`Successfully added new feed to '${that.state.feed_cat}'`);
+                                alertify.success(`Successfully added new RSS Feed to '${that.state.feed_cat}'`);
                             }
                             that.setState({feed: feedArr});
                         }
@@ -96,7 +96,7 @@ class Home extends React.Component {
                         counter++;
                         if(counter == response.data.length){
                             if(that.state.feed_add == true){
-                                alertify.success(`Successfully added new feed to '${that.state.feed_cat}'`);
+                                alertify.success(`Successfully added new RSS Feed to '${that.state.feed_cat}'`);
                             }
                             that.setState({feed: feedArr});
                         }

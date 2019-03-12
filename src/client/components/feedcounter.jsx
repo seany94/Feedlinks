@@ -59,6 +59,7 @@ class Feedcounter extends React.Component {
           .then(response => {
             that.componentDidMount();
             that.setState({feed_edit: true});
+            alertify.success('Successfully edited RSS feed');
           });
     }
 

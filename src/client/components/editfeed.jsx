@@ -3,6 +3,9 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 const axios = require('axios');
+const Parser = require('rss-parser');
+const parser = new Parser();
+const CORS_PROXY = "https://cors-anywhere.herokuapp.com/"
 
 class Editfeed extends React.Component {
     constructor() {
@@ -21,7 +24,15 @@ class Editfeed extends React.Component {
     }
 
     clickHandler(link, id){
-        this.props.editfeed(link, id)
+        var that = this;
+        parser.parseURL(CORS_PROXY + this.state.feed_link, function(err, feed) {
+            if(err != null){
+                alertify.error('Error not a valid RSS Feed. Please try again.');
+            }
+            else{
+                that.props.editfeed(link, id)
+            }
+        })
     }
 
     render() {
