@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Cookies from 'js-cookie';
+import MediaQuery from 'react-responsive';
 
 import Homecss from '../styles/home.scss'
 import Editfeed from '../components/editfeed';
@@ -69,6 +70,11 @@ class Feedcounter extends React.Component {
         if(this.state.completed == true){
           // console.log(this.state.feedcounter, "HI")
           const counter = this.state.feedcounter.map(link => {return <Counter list={link} delete={this.delFeedClickHandler} edit={this.editFeedClickHandler} ></Counter>});
+          const newsites = {
+            backgroundColor: 'darkslategray',
+            borderColor: 'darkslategray',
+            marginTop: '0px'
+          }
 
           return (
               <div>
@@ -89,7 +95,22 @@ class Feedcounter extends React.Component {
                       </div>
                     </div>
                   </div>
-                <button type="button" className={Homecss.button} onClick={this.optionfeedClickHandler} data-toggle="modal" data-target="#feed_counter">Feed Counter: {count}</button>
+                <MediaQuery query="(min-device-width: 700px)">
+                    <button type="button" className={Homecss.button} onClick={this.optionfeedClickHandler} data-toggle="modal" data-target="#feed_counter">Feed Counter: {count}</button>
+                </MediaQuery>
+                <MediaQuery query="(max-device-width: 700px)">
+                <button type="button" className={Homecss.button_sm} onClick={this.optionfeedClickHandler} data-toggle="modal" data-target="#feed_counter">Feed Counter: {count}</button>
+                <button type="button" className={Homecss.button_sm} data-toggle="collapse" href="#news" role="button" aria-expanded="false" aria-controls="news">News Sites<br/>&nbsp;</button>
+                      <div className="collapse" id="news">
+                        <div className="card card-body text-center" style={newsites}>
+                          <a href="https://www.bbc.com/news/10628494" target="_blank">BBC</a>
+                          <a href="https://www.channelnewsasia.com/news/rss" target="_blank">Channel NewsAsia</a>
+                          <a href="http://www.chinadaily.com.cn/rss/index.html" target="_blank">China Daily</a>
+                          <a href="https://www.washingtonpost.com/discussions/2018/10/12/washington-post-rss-feeds/?noredirect=on&utm_term=.0199cfea8cd8" target="_blank">The Washington Post</a>
+                          <a href="https://www.dailytelegraph.com.au/help-rss" target="_blank">Daily Telegraph</a>
+                        </div>
+                      </div>
+                  </MediaQuery>
               </div>
           );
         }

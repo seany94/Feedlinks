@@ -2,6 +2,7 @@ import React from 'react';
 
 import Homecss from '../styles/home.scss'
 import Cookies from 'js-cookie';
+import MediaQuery from 'react-responsive';
 
 import Addfeed from '../components/addfeed';
 import Addcategory from '../components/addcategory';
@@ -274,93 +275,170 @@ class Home extends React.Component {
 
     return (
       <div>
-        <h1 className="text-center">Welcome to FeedLinks {this.state.name} <img className="rounded-circle" src={this.state.photo_url} width="55px" height="55px"/>!
-        <button type="button" onClick={this.props.signout} className={Homecss.signout}>
-            <i className="fas fa-sign-out-alt"></i>
-        </button>
-        </h1>
-        <div className="row">
-            <div className="col-2">
-                <div className="modal fade" id="addFeed" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Add Feed</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div className="modal-body" id="modal-addfeed">
-                        <Addfeed addfeed={this.addfeedClickHandler}/>
+        <MediaQuery query="(min-device-width: 700px)">
+            <h1 className="text-center">Welcome to FeedLinks {this.state.name} <img className="rounded-circle" src={this.state.photo_url} width="55px" height="55px"/>!
+            <button type="button" onClick={this.props.signout} className={Homecss.signout}>
+                <i className="fas fa-sign-out-alt"></i>
+            </button>
+            </h1>
+            <div className="row">
+                <div className="col-2">
+                    <div className="modal fade" id="addFeed" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Add Feed</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div className="modal-body" id="modal-addfeed">
+                            <Addfeed addfeed={this.addfeedClickHandler}/>
+                          </div>
+                        </div>
                       </div>
                     </div>
+                    <div className="modal fade" id="addCat" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Add Category</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div className="modal-body" id="modal-addfeed">
+                            <Addcategory addcategory={this.addcategoryClickHandler}/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <button type="button" onClick={this.optionfeedClickHandler} className={Homecss.button} data-toggle="modal" data-target="#addFeed"><i className="fa fa-plus"></i>&nbsp; &nbsp;Feed &nbsp; &nbsp; &nbsp;</button>
+                  <button type="button" className={Homecss.button} data-toggle="modal" data-target="#addCat"><i className="fa fa-plus"></i> Category&nbsp;</button>
+                  <br/>
+                  <div>
+                    <div className={Homecss.list}>
+                        <a onClick={() => this.unsortedcategoryClickHandler("unsorted")}>Unsorted</a>
+                    </div>
+                      {categories}
                   </div>
                 </div>
-                <div className="modal fade" id="addCat" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Add Category</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
+                <div className="col-8">
+                    <div className="d-flex justify-content-center">
+                        <div className={Homecss.searchbar}>
+                          <input className={Homecss.search_input} onChange={this.searchChangeHandler} id="search" type="text" placeholder="Enter Title of Feed"/>
+                          <a className={Homecss.search_icon}><i className="fas fa-search"></i></a>
+                        </div>
+                    </div>
+                    <div className={Homecss.content} id="feed">
+                        <img src="https://i.redd.it/ad27atzy1zxz.gif" alt="" id="loading" width="920px"/>
+                        {feeds}
+                    </div>
+                    <div className={Homecss.footer}>
+                        Copyright 2019 <span> </span>
+                        Created with &hearts; by <span>Sean Chan</span><span> </span>
+                        <i className="fas fa-at"></i>
+                        <span> </span>
+                        <div className={Homecss.footer_icons}>
+                            <a href="https://github.com/seany94" target="_blank"><i className="fab fa-github-square"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/seancwl" target="_blank"><i className="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://seany94.github.io/" target="_blank"><i className="fab fa-chrome"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-2">
+                      <Feedcounter />
+                      <button type="button" className={Homecss.button} data-toggle="collapse" href="#news" role="button" aria-expanded="false" aria-controls="news">News Sites</button>
+                      <div className="collapse" id="news">
+                        <div className="card card-body text-center" style={newsites}>
+                          <a href="https://www.bbc.com/news/10628494" target="_blank">BBC</a>
+                          <a href="https://www.channelnewsasia.com/news/rss" target="_blank">Channel NewsAsia</a>
+                          <a href="http://www.chinadaily.com.cn/rss/index.html" target="_blank">China Daily</a>
+                          <a href="https://www.washingtonpost.com/discussions/2018/10/12/washington-post-rss-feeds/?noredirect=on&utm_term=.0199cfea8cd8" target="_blank">The Washington Post</a>
+                          <a href="https://www.dailytelegraph.com.au/help-rss" target="_blank">Daily Telegraph</a>
+                        </div>
                       </div>
-                      <div className="modal-body" id="modal-addfeed">
-                        <Addcategory addcategory={this.addcategoryClickHandler}/>
+                </div>
+            </div>
+        </MediaQuery>
+        <MediaQuery query="(max-device-width: 700px)">
+            <h1 className="text-center">Welcome to FeedLinks {this.state.name} <img className="rounded-circle" src={this.state.photo_url} width="55px" height="55px"/>!
+            <button type="button" onClick={this.props.signout} className={Homecss.signout}>
+                <i className="fas fa-sign-out-alt"></i>
+            </button>
+            </h1>
+            <div className="row">
+                <div className="col-12">
+                    <div className="modal fade" id="addFeed" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                              <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Add Feed</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div className="modal-body" id="modal-addfeed">
+                                <Addfeed addfeed={this.addfeedClickHandler}/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="modal fade" id="addCat" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                              <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Add Category</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div className="modal-body" id="modal-addfeed">
+                                <Addcategory addcategory={this.addcategoryClickHandler}/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <button type="button" className={Homecss.button_sm} data-toggle="modal" data-target="#addCat"><i className="fa fa-plus"></i> Category</button>
+                      <button type="button" onClick={this.optionfeedClickHandler} className={Homecss.button_sm} data-toggle="modal" data-target="#addFeed">&nbsp;<i className="fa fa-plus"></i> Feed&nbsp; &nbsp;</button>
+                      <br/>
+                      <div>
+                        <div className={Homecss.list_sm}>
+                            <a onClick={() => this.unsortedcategoryClickHandler("unsorted")}>Unsorted</a>
+                        </div>
+                          {categories}
                       </div>
+                    <Feedcounter />
+                    <div className="d-flex justify-content-center">
+                        <div className={Homecss.searchbar_sm}>
+                          <input className={Homecss.search_input_sm} onChange={this.searchChangeHandler} id="search" type="text" placeholder="Enter Title of Feed"/>
+                          <a className={Homecss.search_icon_sm}><i className="fas fa-search"></i></a>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              <button type="button" onClick={this.optionfeedClickHandler} className={Homecss.button} data-toggle="modal" data-target="#addFeed"><i className="fa fa-plus"></i>&nbsp; &nbsp;Feed &nbsp; &nbsp; &nbsp;</button>
-              <button type="button" className={Homecss.button} data-toggle="modal" data-target="#addCat"><i className="fa fa-plus"></i> Category&nbsp;</button>
-              <br/>
-              <div>
-                <div className={Homecss.list}>
-                    <a onClick={() => this.unsortedcategoryClickHandler("unsorted")}>Unsorted</a>
-                </div>
-                  {categories}
-              </div>
-            </div>
-            <div className="col-8">
-                <div className="d-flex justify-content-center">
-                    <div className={Homecss.searchbar}>
-                      <input className={Homecss.search_input} onChange={this.searchChangeHandler} id="search" type="text" placeholder="Enter Title of Feed"/>
-                      <a className={Homecss.search_icon}><i className="fas fa-search"></i></a>
+                    <div className={Homecss.content_sm} id="feed">
+                        <img src="https://i.redd.it/ad27atzy1zxz.gif" alt="" id="loading" width="920px"/>
+                        {feeds}
                     </div>
-                </div>
-                <div className={Homecss.content} id="feed">
-                    <img src="https://i.redd.it/ad27atzy1zxz.gif" alt="" id="loading" width="920px"/>
-                    {feeds}
-                </div>
-                <div className={Homecss.footer}>
-                    Copyright 2019 <span> </span>
-                    Created with &hearts; by <span>Sean Chan</span><span> </span>
-                    <i className="fas fa-at"></i>
-                    <span> </span>
-                    <div className={Homecss.footer_icons}>
-                        <a href="https://github.com/seany94" target="_blank"><i className="fab fa-github-square"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/seancwl" target="_blank"><i className="fab fa-linkedin"></i>
-                        </a>
-                        <a href="https://seany94.github.io/" target="_blank"><i className="fab fa-chrome"></i>
-                        </a>
+                    <div className={Homecss.footer}>
+                        Copyright 2019 <span> </span>
+                        Created with &hearts; by <span>Sean Chan</span><span> </span>
+                        <i className="fas fa-at"></i>
+                        <span> </span>
+                        <div className={Homecss.footer_icons}>
+                            <a href="https://github.com/seany94" target="_blank"><i className="fab fa-github-square"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/seancwl" target="_blank"><i className="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://seany94.github.io/" target="_blank"><i className="fab fa-chrome"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="col-2">
-                  <Feedcounter />
-                  <button type="button" className={Homecss.button} data-toggle="collapse" href="#news" role="button" aria-expanded="false" aria-controls="news">News Sites</button>
-                  <div className="collapse" id="news">
-                    <div className="card card-body text-center" style={newsites}>
-                      <a href="https://www.bbc.com/news/10628494" target="_blank">BBC</a>
-                      <a href="https://www.channelnewsasia.com/news/rss" target="_blank">Channel NewsAsia</a>
-                      <a href="http://www.chinadaily.com.cn/rss/index.html" target="_blank">China Daily</a>
-                      <a href="https://www.washingtonpost.com/discussions/2018/10/12/washington-post-rss-feeds/?noredirect=on&utm_term=.0199cfea8cd8" target="_blank">The Washington Post</a>
-                      <a href="https://www.dailytelegraph.com.au/help-rss" target="_blank">Daily Telegraph</a>
-                    </div>
-                  </div>
-            </div>
-        </div>
+        </MediaQuery>
       </div>
     );
   }
@@ -397,16 +475,30 @@ class Category extends React.Component{
                     </div>
                   </div>
                 </div>
-                <div className={Homecss.list}>
-                    <a onClick={() => this.props.sort(this.props.list.id)}>{this.props.list.title}</a>
-                    <span> </span>
-                    <a onClick={() => {this.props.delete(this.props.list)}}>
-                        <i className="far fa-trash-alt" id="del"></i>
-                    </a>
-                    <a data-toggle="modal" data-target={"#editCat" + this.props.list.title}>
-                        <i className="far fa-edit"></i>
-                    </a>
-                </div>
+                <MediaQuery query="(min-device-width: 700px)">
+                    <div className={Homecss.list}>
+                        <a onClick={() => this.props.sort(this.props.list.id)}>{this.props.list.title}</a>
+                        <span> </span>
+                        <a onClick={() => {this.props.delete(this.props.list)}}>
+                            <i className="far fa-trash-alt" id="del"></i>
+                        </a>
+                        <a data-toggle="modal" data-target={"#editCat" + this.props.list.title}>
+                            <i className="far fa-edit"></i>
+                        </a>
+                    </div>
+                </MediaQuery>
+                <MediaQuery query="(max-device-width: 700px)">
+                    <div className={Homecss.list_sm}>
+                        <a onClick={() => this.props.sort(this.props.list.id)}>{this.props.list.title}</a>
+                        <span> </span>
+                        <a onClick={() => {this.props.delete(this.props.list)}}>
+                            <i className="far fa-trash-alt" id="del"></i>
+                        </a>
+                        <a data-toggle="modal" data-target={"#editCat" + this.props.list.title}>
+                            <i className="far fa-edit"></i>
+                        </a>
+                    </div>
+                </MediaQuery>
             </div>
             );
     }

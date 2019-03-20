@@ -1,5 +1,6 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
+import MediaQuery from 'react-responsive';
 // import { Route, Link, Switch, Redirect } from "react-router-dom";
 
 import Splashcss from './styles/landing.scss'
@@ -75,10 +76,18 @@ class App extends React.Component {
                 </div>
                 <div className={Splashcss.landing}>
                     <h1 className="text-center">Welcome to FeedLinks!</h1>
-                    <div className={Splashcss.splash}>
-                        <button type="button" className={Splashcss.button} data-toggle="modal" data-target="#login">&nbsp; Login &nbsp;</button>
-                        <button type="button" className={Splashcss.button} data-toggle="modal" data-target="#signup">Sign-Up</button>
-                    </div>
+                    <MediaQuery query="(min-device-width: 700px)">
+                        <div className={Splashcss.splash}>
+                            <button type="button" className={Splashcss.button} data-toggle="modal" data-target="#login">&nbsp; Login &nbsp;</button>
+                            <button type="button" className={Splashcss.button} data-toggle="modal" data-target="#signup">Sign-Up</button>
+                        </div>
+                    </MediaQuery>
+                    <MediaQuery query="(max-device-width: 700px)">
+                        <div className={Splashcss.mobile}>
+                            <button type="button" className={Splashcss.button_sm} data-toggle="modal" data-target="#login">&nbsp; Login &nbsp;</button>
+                            <button type="button" className={Splashcss.button_sm} data-toggle="modal" data-target="#signup">Sign-Up</button>
+                        </div>
+                    </MediaQuery>
                 </div>
               </div>
             );
