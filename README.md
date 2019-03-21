@@ -53,3 +53,5 @@ Further: Add number of feed saved in each category tab as counters
 Further: Feed counter allow user to see all saved feed and edit/delete them
 
 Further: Validation on feed links to check if its a RSS Feed
+
+Further: Add user preference on news type on signup page and auto generate a few RSS feed added to the account
