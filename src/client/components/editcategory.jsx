@@ -15,6 +15,18 @@ class Editcategory extends React.Component {
     };
   }
 
+    componentDidMount(){
+        var that = this;
+        $(function(){
+          $('#editCat').keypress(function(e){
+            if(e.which == 13) {
+              $('#editCat').modal('toggle');
+              that.clickHandler();
+            }
+          })
+        })
+    }
+
     catChangeHandler(event){
         // console.log(event.target.value)
         this.setState({category: event.target.value});

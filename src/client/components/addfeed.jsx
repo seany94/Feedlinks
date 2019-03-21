@@ -19,6 +19,18 @@ class Addfeed extends React.Component {
     };
   }
 
+    componentDidMount(){
+        var that = this;
+        $(function(){
+          $('#addFeed').keypress(function(e){
+            if(e.which == 13) {
+              $('#addFeed').modal('toggle');
+              that.clickHandler();
+            }
+          })
+        })
+    }
+
     feedChangeHandler(event){
         // console.log(event.target.value)
         this.setState({feed_url: event.target.value});

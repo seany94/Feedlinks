@@ -17,6 +17,18 @@ class Login extends React.Component {
     };
   }
 
+    componentDidMount(){
+        var that = this;
+        $(function(){
+          $('#login').keypress(function(e){
+            if(e.which == 13) {
+              $('#login').modal('toggle');
+              that.clickHandler();
+            }
+          })
+        })
+    }
+
     usernameChangeHandler(event){
         this.setState({username: event.target.value});
     }

@@ -21,6 +21,18 @@ class Signup extends React.Component {
     };
   }
 
+    componentDidMount(){
+        var that = this;
+        $(function(){
+          $('#signup').keypress(function(e){
+            if(e.which == 13) {
+              $('#signup').modal('toggle');
+              that.clickHandler();
+            }
+          })
+        })
+    }
+
     nameChangeHandler(event){
         this.setState({name: event.target.value});
     }

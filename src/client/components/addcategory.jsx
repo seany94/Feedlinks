@@ -15,6 +15,18 @@ class Addcategory extends React.Component {
     };
   }
 
+    componentDidMount(){
+        var that = this;
+        $(function(){
+          $('#addCat').keypress(function(e){
+            if(e.which == 13) {
+              $('#addCat').modal('toggle');
+              that.clickHandler();
+            }
+          })
+        })
+    }
+
     catChangeHandler(event){
         // console.log(event.target.value)
         this.setState({category: event.target.value});

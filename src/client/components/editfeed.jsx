@@ -18,6 +18,18 @@ class Editfeed extends React.Component {
     };
   }
 
+    // componentDidMount(){
+    //     var that = this;
+    //     $(function(){
+    //       $('#editFeed').keypress(function(e){
+    //         if(e.which == 13) {
+    //           $('#editFeed').modal('toggle');
+    //           that.clickHandler();
+    //         }
+    //       })
+    //     })
+    // }
+
     feedChangeHandler(event){
         // console.log(this.props)
         this.setState({feed_link: event.target.value});
@@ -43,7 +55,7 @@ class Editfeed extends React.Component {
                     <label><i className="fas fa-link"></i> Feed Link*</label>
                     <input onChange={this.feedChangeHandler} type="text" name="feed" value={this.state.feed_link} className="form-control" placeholder="Enter Feed Link" />
                 </div>
-                <button type="button" onClick={() => {this.clickHandler(this.state.feed_link, this.props.feed_id)}} className="btn btn-primary mr-2" id="editCat" data-dismiss="modal">Edit</button>
+                <button type="button" onClick={() => {this.clickHandler(this.state.feed_link, this.props.feed_id)}} className="btn btn-primary mr-2" id="editFeed" data-dismiss="modal">Edit</button>
                 <span></span>
                 <button type="button" className="btn btn-secondary" onClick={() => {this.props.closefeed('#editFeed' + this.props.feed_id)}}>Close</button>
             </div>
