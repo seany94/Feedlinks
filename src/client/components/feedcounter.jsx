@@ -171,7 +171,7 @@ class Counter extends React.Component {
       const modal_sm = {
           color: 'black',
           textAlign: 'left',
-          marginTop: '400px'
+          marginTop: '300px'
       }
 
       const font = {
