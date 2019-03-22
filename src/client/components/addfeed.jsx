@@ -37,13 +37,16 @@ class Addfeed extends React.Component {
     }
 
     selectChangeHandler(event){
-        // console.log(event.target.value)
         this.setState({select: event.target.value});
     }
 
     clickHandler(){
         var that = this;
-        parser.parseURL(CORS_PROXY + this.state.feed_url, function(err, feed) {
+        if(this.state.select == ""){
+            alertify.error('Error not a valid category. Please try again.');
+        }
+        else{
+            parser.parseURL(CORS_PROXY + this.state.feed_url, function(err, feed) {
             if(err != null){
                 alertify.error('Error not a valid RSS Feed. Please try again.');
             }
@@ -57,6 +60,7 @@ class Addfeed extends React.Component {
                   })
             }
         })
+        }
     }
 
     render() {

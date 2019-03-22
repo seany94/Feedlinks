@@ -14,6 +14,7 @@ module.exports = (app, db) => {
   app.delete('/feed/delete', feed.del);
   app.put('/feed/edit/:id', feed.edit);
 
+  app.get('/user/:id/category/:id', category.findCat);
   app.post('/category/add', category.addCat);
   app.delete('/category/delete', category.del);
   app.put('/category/edit/:id', category.edit);

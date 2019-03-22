@@ -31,10 +31,19 @@ module.exports = (db) => {
         });
     };
 
+    let findCat = (req, res) => {
+        let cookie = req.cookies.user;
+        let catId = req.params.id;
+        db.categories.find(cookie, catId, (error, result, values) => {
+            res.send(result)
+        });
+    };
+
   return {
     addCat:addCat,
     del:del,
     edit:edit,
     tab:tab,
+    findCat:findCat
   };
 };

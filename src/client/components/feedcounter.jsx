@@ -36,7 +36,7 @@ class Feedcounter extends React.Component {
     }
 
     componentWillReceiveProps(){
-        this.componentDidMount()
+        this.componentDidMount();
     }
 
     delFeedClickHandler(feed){
@@ -138,11 +138,11 @@ class Counter extends React.Component {
   }
 
     componentDidMount(){
-      this.setState({feed_links: this.props.list.feed_url, feed_id: this.props.list.id})
+      this.setState({feed_links: this.props.list.feed_url, feed_id: this.props.list.id});
     }
 
     componentWillReceiveProps(){
-      this.setState({feed_links: this.props.list.feed_url, feed_id: this.props.list.id})
+      this.setState({feed_links: this.props.list.feed_url, feed_id: this.props.list.id});
     }
 
     editModalHandler(feed){
@@ -168,17 +168,28 @@ class Counter extends React.Component {
           marginTop: '460px'
       }
 
+      const modal_sm = {
+          color: 'black',
+          textAlign: 'left',
+          marginTop: '400px'
+      }
+
       const font = {
           fontSize: '12px'
       }
 
+      const fontLink = {
+          fontSize: '11px'
+      }
+
         return (
             <div className={Homecss.link}>
+            <MediaQuery query="(min-device-height: 670px)">
               <div className="modal fade" id={"editFeed" + this.state.feed_id} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style={modal}>
                 <div className="modal-dialog" role="document">
                   <div className="modal-content">
                     <div className="modal-header">
-                      <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Edit Feed Link ({this.state.feed_links})</h5>
+                      <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Edit Feed Link <div style={fontLink}>({this.state.feed_links})</div></h5>
                       <button type="button" className="close" onClick={() => {this.closeModalHandler('#editFeed' + this.state.feed_id)}} aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -189,6 +200,24 @@ class Counter extends React.Component {
                   </div>
                 </div>
               </div>
+              </MediaQuery>
+              <MediaQuery query="(max-device-height: 670px)">
+                <div className="modal fade" id={"editFeed" + this.state.feed_id} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style={modal_sm}>
+                <div className="modal-dialog" role="document">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="exampleModalLabel"><i className="fas fa-rss-square"></i> Edit Feed Link <div style={fontLink}>({this.state.feed_links})</div></h5>
+                      <button type="button" className="close" onClick={() => {this.closeModalHandler('#editFeed' + this.state.feed_id)}} aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div className="modal-body" id="modal-editfeed">
+                      <Editfeed feed_url={this.state.feed_links} feed_id={this.state.feed_id} editfeed={this.clickHandler} closefeed={this.closeModalHandler}/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </MediaQuery>
               <div style={font}>
                 {this.state.feed_links}
                 <span> </span>

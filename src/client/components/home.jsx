@@ -127,14 +127,12 @@ class Home extends React.Component {
 
     addfeedClickHandler(event){
         this.componentDidMount();
-        if(isNaN(event)){
-            this.setState({feed_add: true, feed_cat: event});
-        }
-        else{
-            var catIndex = parseInt(event) - 1
-            var catTitle = this.state.category[catIndex].title
-            this.setState({feed_add: true, feed_cat: catTitle});
-        }
+        var that = this;
+        var userCookie = Cookies.get('user');
+        axios.get(`/user/${userCookie}/category/${event}`)
+          .then(function (response) {
+            that.setState({feed_add: true, feed_cat: response.data[0].title});
+          })
     }
 
     addcategoryClickHandler(event){
