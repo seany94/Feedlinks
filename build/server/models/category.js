@@ -95,10 +95,29 @@ module.exports = (dbPoolInstance) => {
     })
   };
 
+  let find = (cookie, catId, callback) => {
+    dbPoolInstance.query(`SELECT * FROM users WHERE id = ${cookie}`, (error, queryResult) =>{
+        dbPoolInstance.query(`SELECT title FROM categories INNER JOIN users ON (users.id = categories.user_id AND users.id = ${cookie}) WHERE categories.id = ${catId}`, (error, queryResult) =>{
+            if( error ){
+
+                // invoke callback function with results after query has executed
+                callback(error, null, null);
+
+              }
+              else{
+
+                // invoke callback function with results after query has executed
+                callback(null, queryResult.rows);
+              }
+        })
+    })
+  };
+
   return {
     addCategory,
     delCategory,
     editCategory,
-    sorted
+    sorted,
+    find
   };
 };

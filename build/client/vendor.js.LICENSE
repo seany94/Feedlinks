@@ -1,3 +1,9 @@
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
 /*!
  * JavaScript Cookie v2.2.0
  * https://github.com/js-cookie/js-cookie
@@ -5,12 +11,6 @@
  * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
  * Released under the MIT license
  */
-
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
 
 /*!
  * The buffer module from node.js, for the browser.

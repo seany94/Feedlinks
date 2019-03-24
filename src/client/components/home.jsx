@@ -47,6 +47,7 @@ class Home extends React.Component {
         var userCookie = Cookies.get('user');
         if(document.body.querySelector('div.modal-backdrop') != null){
             document.body.removeChild(document.body.querySelector('div.modal-backdrop'));
+            document.body.removeAttribute("class");
             // console.log(userCookie)
             axios.get(`/user/${userCookie}`)
               .then(function (response) {
